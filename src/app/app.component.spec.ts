@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
+  let fixture, component;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -14,20 +16,21 @@ describe('AppComponent', () => {
     }).compileComponents();
   }));
 
+  beforeEach(() => {
+     fixture = TestBed.createComponent(AppComponent);
+     component = fixture.componentInstance;
+  });
+
+
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     expect(component).toBeTruthy();
   }));
 
   it(`should have as title 'illugen'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     expect(component.title).toEqual('Illugen');
   });
 
   it(`should render a toolbar with app title, overview and settings icon`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const toolbar = fixture.nativeElement.querySelector('.toolbar')
     const title = fixture.nativeElement.querySelector('.title')
     const overview = fixture.nativeElement.querySelector('.overview')
@@ -40,21 +43,17 @@ describe('AppComponent', () => {
   });
 
   it(`should render a hint text`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const hint = fixture.nativeElement.querySelector('.hint')
     expect(hint).toBeDefined();
   });
 
   it('should render generate button', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const button = fixture.nativeElement.querySelector('.generate')
     fixture.detectChanges();
     expect(button.textContent).toContain('start');
   });
 
   it('should call generate function ', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const component = fixture.componentInstance;
     const button = fixture.nativeElement.querySelector('.generate')
     spyOn(component, 'onGenerateClick');
     button.click();
@@ -63,7 +62,6 @@ describe('AppComponent', () => {
   }));
 
   it('should render list', ()=>{
-    const fixture = TestBed.createComponent(AppComponent);
     const button = fixture.nativeElement.querySelector('.generate');
     button.click();
     fixture.detectChanges();
