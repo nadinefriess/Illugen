@@ -1,0 +1,67 @@
+<mat-card class="app">
+
+    <mat-toolbar class="toolbar">
+        <a href="/" type="button" mat-icon-button class="action-icon home" aria-label="Example icon-button with eye icon">
+            <mat-icon>keyboard_arrow_left</mat-icon>
+        </a>
+        <span class="title">Übersicht</span>
+        <a href="#" type="button" mat-icon-button class="action-icon action" aria-label="Example icon-button with settings icon">
+            <mat-icon>add</mat-icon>
+        </a>
+    </mat-toolbar>
+
+    <mat-card-content class="content">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Kategorie
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-accordion *ngFor='let item of categoryList;' class="data-list">
+                    <mat-expansion-panel *ngIf="item" class="item-list" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{item.category}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul *ngIf="item" class="item-list">
+                            <li  *ngFor='let term of item.term'>
+                                {{term}}
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+        
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Themen
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                
+                <mat-accordion *ngFor='let item of topicList;' class="data-list">
+                    <mat-expansion-panel *ngIf="item" class="item-list" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                {{item.topic}}
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <ul *ngIf="item" class="item-list">
+                            <li  *ngFor='let term of item.term'>
+                                {{term}}
+                            </li>
+                        </ul>
+                    </mat-expansion-panel>
+                </mat-accordion>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+      </mat-card-content>
+  
+  </mat-card>

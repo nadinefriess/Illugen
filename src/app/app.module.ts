@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterModule } from '@angular/router';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,10 +12,18 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule} from '@angular/material/toolbar';
 import { MatIconModule} from '@angular/material/icon';
+import {MatExpansionModule} from '@angular/material/expansion';
+
+import { HomeComponent } from './home/home.component';
+import { OverviewComponent } from './overview/overview.component';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    OverviewComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +34,13 @@ import { MatIconModule} from '@angular/material/icon';
     MatDividerModule,
     MatCardModule,
     MatToolbarModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    RouterModule.forRoot([
+      { path: '', component: HomeComponent },
+      { path: 'overview', component: OverviewComponent },
+      { path: 'settings', component: SettingsComponent }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]

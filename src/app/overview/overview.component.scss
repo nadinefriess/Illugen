@@ -1,0 +1,16 @@
+.app{
+    margin: auto;
+    width: 50%;
+      max-width: 360px;
+}
+.title{
+    display: flex;
+    flex: 1;
+}
+.toolbar{
+    margin-bottom: 16px;
+}
+.item-list{
+    list-style: none;
+    padding: 10px;
+}
