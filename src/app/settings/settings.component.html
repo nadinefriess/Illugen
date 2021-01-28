@@ -1,10 +1,33 @@
 <mat-card class="app">
 
     <mat-toolbar class="toolbar">
-        <a href="/" type="button" mat-icon-button class="action-icon home" aria-label="Example icon-button with eye icon">
+        <a href="/" type="button" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </a>
         <span class="title">Einstellungen</span>
+        <button mat-icon-button class="action-icon" aria-label="Icon-button with check icon">
+            <mat-icon>check</mat-icon>
+        </button>
     </mat-toolbar>
+
+    <mat-card-content class="content">
+        <div class="hint">
+            <p>Wähle die Anzahl der zu berücksichtigten Begriffe und die Themen aus.</p>
+        </div> 
+        <form [formGroup]="form">
+            <div class="form-group">
+                <label for="termsPerCategory">Begriffe pro Kategorie:</label>
+                <input id="termsPerCategory" formControlName="termsPerCategory" type="number" class="form-control" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="termsPerTopics">Begriffe pro Themenbereich:</label>
+                <input id="termsPerTopics" formControlName="termsPerTopics" type="number" class="form-control" min="1" max="5">
+            </div>
+            <div class="form-group">
+                <label for="numberOfTopics">Anzahl der Themen:</label>
+                <input id="numberOfTopics" formControlName="numberOfTopics" type="number" class="form-control" min="1" max="5">
+            </div>
+        </form>
+    </mat-card-content>
   
   </mat-card>

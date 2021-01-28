@@ -1,11 +1,11 @@
 <mat-card class="app">
 
     <mat-toolbar class="toolbar">
-        <a href="/" type="button" mat-icon-button class="action-icon home" aria-label="Example icon-button with eye icon">
+        <a href="/" type="button" mat-icon-button class="action-icon" aria-label="Icon-button with eye icon">
             <mat-icon>keyboard_arrow_left</mat-icon>
         </a>
         <span class="title">Übersicht</span>
-        <a href="#" type="button" mat-icon-button class="action-icon action" aria-label="Example icon-button with settings icon">
+        <a href="#" type="button" mat-icon-button class="action-icon" aria-label="Icon-button with settings icon">
             <mat-icon>add</mat-icon>
         </a>
     </mat-toolbar>
@@ -20,7 +20,7 @@
                 </mat-expansion-panel-header>
                 
                 <mat-accordion *ngFor='let item of categoryList;' class="data-list">
-                    <mat-expansion-panel *ngIf="item" class="item-list" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{item.category}}
@@ -46,7 +46,7 @@
                 </mat-expansion-panel-header>
                 
                 <mat-accordion *ngFor='let item of topicList;' class="data-list">
-                    <mat-expansion-panel *ngIf="item" class="item-list" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
                                 {{item.topic}}
