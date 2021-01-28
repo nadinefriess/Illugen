@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import * as data from '../../assets/data.json';
+import { DataService } from './../data.service';
 
 @Component({
   selector: 'app-overview',
@@ -11,13 +11,11 @@ export class OverviewComponent implements OnInit {
   public categoryList:any;
   public topicList:any;
 
-  constructor() { }
+  constructor(public dataService: DataService) {}
   
   ngOnInit(): void {
-    this.categoryList= [];
-    this.topicList= [];
-    this.categoryList = data.default.categoryList;
-    this.topicList = data.default.topicList;
+    this.categoryList = this.dataService.getListByName('category');
+    this.topicList = this.dataService.getListByName('topic');
   }
 
 }

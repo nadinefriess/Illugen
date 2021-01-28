@@ -19,6 +19,8 @@ import { HomeComponent } from './home/home.component';
 import { OverviewComponent } from './overview/overview.component';
 import { SettingsComponent } from './settings/settings.component';
 
+import { DataService } from './data.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,7 +47,7 @@ import { SettingsComponent } from './settings/settings.component';
       { path: 'settings', component: SettingsComponent }
     ])
   ],
-  providers: [],
+  providers: [DataService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
