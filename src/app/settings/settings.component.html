@@ -12,20 +12,20 @@
 
     <mat-card-content class="content">
         <div class="hint">
-            <p>Wähle die Anzahl der zu berücksichtigten Begriffe und die Themen aus.</p>
+            <p>Wähle die maximal zu berücksichtigten Begriffe und die Anzahl der Themen aus.</p>
         </div> 
         <form [formGroup]="form">
             <div class="form-group">
-                <label for="termsPerCategory">Begriffe pro Kategorie:</label>
-                <input id="termsPerCategory" formControlName="termsPerCategory" type="number" class="form-control" min="1" max="5">
+                <label for="termsPerCategory">Begriffe pro Kategorie (max.: {{maxCategoryTerms}})</label>
+                <input id="termsPerCategory" formControlName="termsPerCategory" type="number" class="form-control" min="1" [max]=maxCategoryTerms>
             </div>
             <div class="form-group">
-                <label for="termsPerTopics">Begriffe pro Themenbereich:</label>
-                <input id="termsPerTopics" formControlName="termsPerTopics" type="number" class="form-control" min="1" max="5">
+                <label for="termsPerTopics">Begriffe pro Themenbereich (max.: {{maxTopicTerms}})</label>
+                <input id="termsPerTopics" formControlName="termsPerTopics" type="number" class="form-control" min="1" [max]="maxTopicTerms">
             </div>
             <div class="form-group">
-                <label for="numberOfTopics">Anzahl der Themen:</label>
-                <input id="numberOfTopics" formControlName="numberOfTopics" type="number" class="form-control" min="1" max="5">
+                <label for="numberOfTopics">Anzahl der Themen (max: {{maxTopics}})</label>
+                <input id="numberOfTopics" formControlName="numberOfTopics" type="number" class="form-control" min="1" [max]="maxTopics">
             </div>
         </form>
     </mat-card-content>

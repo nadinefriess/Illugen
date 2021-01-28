@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as data from '../assets/data.json';
+import { isNgTemplate } from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,15 @@ export class DataService {
       this.result.push(item.term[randomIndex]);
     });
   }
+
+  private checkSmallestLength(listName:string):number{ //20, 10.30
+    var lists = [];
+    data.default[listName+'List'].forEach((item)=>{
+      lists.push(item.term.length)
+    })
+  
+    return Math.min(...lists);
+  }
   
   public getRandomTerms():string[]{
     this.result = []
@@ -30,6 +40,14 @@ export class DataService {
 
   public getListByName(listName:string):[any]{
     return data.default[listName+'List'];
+  }
+
+  public getSmallestLengthOfLists(listName:string):number{
+    return this.checkSmallestLength(listName); 
+  }
+
+  public getNumberOfTopics():number{
+    return data.default.topicList.length;
   }
 }
 
