@@ -4,8 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterModule } from '@angular/router';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatButtonModule } from '@angular/material/button';
@@ -15,11 +13,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 
-import { HomeComponent } from './home/home.component';
-import { OverviewComponent } from './overview/overview.component';
-import { SettingsComponent } from './settings/settings.component';
+import { HomeComponent } from './components/home/home.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { SettingsComponent } from './components/settings/settings.component';
 
-import { DataService } from './data.service';
+import { appStoreProviders } from './app.store';
 
 @NgModule({
   declarations: [
@@ -32,22 +30,15 @@ import { DataService } from './data.service';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
     MatSliderModule,
     MatButtonModule,
     MatDividerModule,
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatExpansionModule,
-    RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'overview', component: OverviewComponent },
-      { path: 'settings', component: SettingsComponent }
-    ])
+    MatExpansionModule  
   ],
-  providers: [DataService],
+  providers: [ appStoreProviders ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

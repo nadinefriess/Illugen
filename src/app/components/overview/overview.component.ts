@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { DataService } from './../data.service';
+import { AppService } from '../../services/app.service';
 
 @Component({
   selector: 'app-overview',
@@ -11,11 +11,11 @@ export class OverviewComponent implements OnInit {
   public categoryList:any;
   public topicList:any;
 
-  constructor(public dataService: DataService) {}
+  constructor(public AppService: AppService) {}
   
   ngOnInit(): void {
-    this.categoryList = this.dataService.getListByName('category');
-    this.topicList = this.dataService.getListByName('topic');
+    this.categoryList = this.AppService.getListByName('category');
+    this.topicList = this.AppService.getListByName('topic');
   }
 
 }

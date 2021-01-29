@@ -1,0 +1,49 @@
+<mat-card class="app">
+
+    <mat-toolbar class="toolbar">
+        <a href="/" type="button" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+            <mat-icon>arrow_back_ios</mat-icon>
+        </a>
+        <span class="title">Einstellungen</span>
+        <button mat-icon-button class="action-icon" aria-label="Icon-button with check icon">
+            <mat-icon>check</mat-icon>
+        </button>
+    </mat-toolbar>
+
+    <mat-card-content class="content">
+        <div class="hint">
+            <p>Wähle die maximal zu berücksichtigten Begriffe und die Anzahl der Themen aus.</p>
+        </div> 
+        <div class="setting">
+            <label for="termsPerCategory">Begriffe pro Kategorie (max.: {{maxCategoryTerms}})</label>
+            <input 
+                id="termsPerCategory" 
+                type="number" 
+                min="1" 
+                [max]="maxCategoryTerms"
+                [value]="termsPerCategory"
+                (onkeyup)="onKeyUp($event)">
+        </div>
+        <div class="setting">
+            <label for="termsPerTopics">Begriffe pro Themenbereich (max.: {{maxTopicTerms}})</label>
+            <input 
+                id="termsPerTopics" 
+                type="number" 
+                min="1" 
+                [max]="maxTopicTerms" 
+                [value]="termsPerTopic"
+                (onkeyup)="onKeyUp($event)">
+        </div>
+        <div class="setting">
+            <label for="numberOfTopics">Anzahl der Themen (max: {{maxTopics}})</label>
+            <input 
+                id="numberOfTopics" 
+                type="number" 
+                min="1" 
+                [max]="maxTopics" 
+                [value]="numberOfTopics"
+                (onkeyup)="onKeyUp($event)">
+        </div>
+    </mat-card-content>
+  
+  </mat-card>
