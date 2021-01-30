@@ -16,7 +16,7 @@ export class AppService {
     this.readState();
   }
 
-  readState() {
+  private readState() {
     const state: AppState = this.store.getState() as AppState;
     this.categoryList = state.categoryList;
     this.topicList = state.topicList;
@@ -50,11 +50,19 @@ export class AppService {
   }
 
   public getListByName(listName:string):Category[]|Topic[]{
-    return this[listName+'List'];
+    switch(listName){
+      case 'category': return this.categoryList;
+      case 'topic': return this.topicList;
+      default: return []
+    }
   }
 
   public getSmallestLengthOfLists(listName:string):number{
-    return this.checkSmallestLength(listName); 
+    switch(listName){
+      case 'category': return this.checkSmallestLength(listName);
+      case 'topic': return this.checkSmallestLength(listName);
+      default: return 1
+    }
   }
 
   public getNumberOfTopics():number{

@@ -1,8 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppService } from '../../services/app.service';
-import { AppStore } from 'src/app/app.store';
-import { Store } from 'redux';
-import { AppState } from 'src/app/types/app.state';
 
 @Component({
   selector: 'app-settings',
@@ -17,7 +14,7 @@ export class SettingsComponent implements OnInit{
   public termsPerTopic = 1;
   public numberOfTopics = 1;
   
-  constructor (@Inject(AppStore) private store: Store<AppState>, public AppService: AppService){}
+  constructor (public AppService: AppService){}
 
   ngOnInit(){
     this.maxCategoryTerms = this.AppService.getSmallestLengthOfLists('category')
@@ -27,6 +24,7 @@ export class SettingsComponent implements OnInit{
   }
 
   onKeyUp(event){
+    debugger;
     //listen to event and dispatch action to save different settings
     //this.store.dispatch();
   }

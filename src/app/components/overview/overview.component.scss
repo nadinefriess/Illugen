@@ -1,7 +1,7 @@
 .app{
     margin: auto;
     width: 50%;
-      max-width: 360px;
+    max-width: 360px;
 }
 .title{
     display: flex;
@@ -10,11 +10,18 @@
 .toolbar{
     margin-bottom: 16px;
 }
-.item-list{
+.content{
+    >.list:first-child{
+        margin-bottom: 10px;
+    }
+}
+.data-lists,.data-list{
+    margin: 10px 0;
+}
+ul{
     list-style: none;
-    padding: 10px;
-    margin: 0;
+    padding-left: 10px;
 }
 .mat-icon {
     font-weight: bolder;
-  }
+}
