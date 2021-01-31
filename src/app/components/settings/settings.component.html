@@ -5,7 +5,7 @@
             <mat-icon>arrow_back_ios</mat-icon>
         </a>
         <span class="title">Einstellungen</span>
-        <button mat-icon-button class="action-icon" aria-label="Icon-button with check icon">
+        <button (click)="save()" mat-icon-button class="action-icon" aria-label="Icon-button with check icon">
             <mat-icon>check</mat-icon>
         </button>
     </mat-toolbar>
@@ -15,34 +15,40 @@
             <p>Wähle die maximal zu berücksichtigten Begriffe und die Anzahl der Themen aus.</p>
         </div> 
         <div class="setting">
-            <label for="termsPerCategory">Begriffe pro Kategorie (max.: {{maxCategoryTerms}})</label>
-            <input 
-                id="termsPerCategory" 
-                type="number" 
-                min="1" 
-                [max]="maxCategoryTerms"
-                [value]="termsPerCategory"
-                (onkeyup)="onKeyUp($event)">
+            <p>Begriffe pro Kategorie (max.: {{maxCategoryTerms}})</p>
+            <div class='counter'>
+                <button (click)="decrement('termsPerCategory')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <span>{{termsPerCategory}}</span>
+                <button (click)="increment('termsPerCategory')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
         </div>
         <div class="setting">
-            <label for="termsPerTopics">Begriffe pro Themenbereich (max.: {{maxTopicTerms}})</label>
-            <input 
-                id="termsPerTopics" 
-                type="number" 
-                min="1" 
-                [max]="maxTopicTerms" 
-                [value]="termsPerTopic"
-                (onkeyup)="onKeyUp($event)">
+            <p>Begriffe pro Thema (max.: {{maxTopicTerms}})</p>
+            <div class='counter'>
+                <button (click)="decrement('termsPerTopic')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <span>{{termsPerTopic}}</span>
+                <button (click)="increment('termsPerTopic')"mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
         </div>
         <div class="setting">
-            <label for="numberOfTopics">Anzahl der Themen (max: {{maxTopics}})</label>
-            <input 
-                id="numberOfTopics" 
-                type="number" 
-                min="1" 
-                [max]="maxTopics" 
-                [value]="numberOfTopics"
-                (onkeyup)="onKeyUp($event)">
+            <p>Anzahl der Themen (max: {{maxTopics}})</p>
+            <div class='counter'>
+                <button (click)="decrement('numberOfTopics')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <span>{{numberOfTopics}}</span>
+                <button (click)="increment('numberOfTopics')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
         </div>
     </mat-card-content>
   

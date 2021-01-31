@@ -14,19 +14,52 @@ export class SettingsComponent implements OnInit{
   public termsPerTopic = 1;
   public numberOfTopics = 1;
   
-  constructor (public AppService: AppService){}
+  constructor (public appService: AppService){}
 
   ngOnInit(){
-    this.maxCategoryTerms = this.AppService.getSmallestLengthOfLists('category')
-    this.maxTopicTerms = this.AppService.getSmallestLengthOfLists('topic')
-    this.maxTopics = this.AppService.getNumberOfTopics();
+    this.maxCategoryTerms = this.appService.getSmallestLengthOfLists('category')
+    this.maxTopicTerms = this.appService.getSmallestLengthOfLists('topic')
+    this.maxTopics = this.appService.getNumberOfTopics();
     this.numberOfTopics = this.maxTopics;
   }
 
-  onKeyUp(event){
+  increment(type:string):void{
     debugger;
-    //listen to event and dispatch action to save different settings
-    //this.store.dispatch();
+    switch(type){
+      case 'termsPerCategory': 
+      if(this.termsPerCategory<this.maxCategoryTerms)
+      this.termsPerCategory++;
+      break;
+      case 'termsPerTopic': 
+      if(this.termsPerTopic<this.maxTopicTerms)
+      this.termsPerTopic++ ;
+      break;
+      case 'numberOfTopics': 
+      if(this.numberOfTopics<this.maxTopics)
+      this.numberOfTopics++ ;
+      break;
+    }
   }
-  
+
+  decrement(type:string):void{
+    debugger;
+    switch(type){
+      case 'termsPerCategory': 
+      if(this.termsPerCategory !=0) 
+      this.termsPerCategory-- ;
+      break;
+      case 'termsPerTopic': 
+      if(this.termsPerTopic !=0) 
+      this.termsPerTopic-- ;
+      break;
+      case 'numberOfTopics': 
+      if(this.numberOfTopics !=0) 
+      this.numberOfTopics-- ;
+      break;
+    }
+  }
+
+  save(){
+    //dispatch an Action to save new settings
+  }
 }

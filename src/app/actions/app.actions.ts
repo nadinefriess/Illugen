@@ -7,6 +7,4 @@ import {
   export const generateListOfRandomTerms: ActionCreator<Action> = () => ({
     type: GENERATE_LIST_OF_RANDOM_TERMS
   });
-  
-
 

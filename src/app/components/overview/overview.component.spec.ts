@@ -39,6 +39,6 @@ describe('OverviewComponent', () => {
 
   it(`should render an accordion with two items`, () => {
     const accordion = fixture.nativeElement.querySelector('.data-list')
-    expect(accordion).toBeDefinedl;
+    expect(accordion).toBeDefined();
   });
 });
