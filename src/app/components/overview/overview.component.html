@@ -1,11 +1,11 @@
 <mat-card class="app">
 
     <mat-toolbar class="toolbar">
-        <a href="/" type="button" mat-icon-button class="action-icon back" aria-label="Icon-button with eye icon">
+        <a routerLink="/" type="button" mat-icon-button class="action-icon back" aria-label="Icon-button with eye icon">
             <mat-icon>arrow_back_ios</mat-icon>
         </a>
         <span class="title">Übersicht</span>
-        <a href="#" type="button" mat-icon-button class="action-icon add" aria-label="Icon-button with settings icon">
+        <a routerLink="#" type="button" mat-icon-button class="action-icon add" aria-label="Icon-button with settings icon">
             <mat-icon>add</mat-icon>
         </a>
     </mat-toolbar>
@@ -18,7 +18,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 
-                <mat-accordion *ngFor='let item of categoryList;'>
+                <mat-accordion *ngFor='let item of categoryList$ | async'>
                     <mat-expansion-panel class="data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
@@ -42,7 +42,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 
-                <mat-accordion *ngFor='let item of topicList;'>
+                <mat-accordion *ngFor='let item of topicList$ | async'>
                     <mat-expansion-panel class="data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>

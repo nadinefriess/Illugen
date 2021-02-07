@@ -1,25 +1,29 @@
-import { Injectable, Inject } from '@angular/core';
-import { AppStore } from '../app.store';
-import { Store } from 'redux';
-import { AppState, Category, Topic } from '../types/app.state';
-
+import { Injectable } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { Observable, combineLatest} from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Category, Topic, Settings } from '../state/app.state';
+import { selectCategories, selectTopics, selectSettings } from '../state/app.selectors';
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
-  private categoryList: Category[];
-  private topicList: Topic[];
-  private randomTermList: string[];
+  private randomTermList$: Observable<string[]>;
+  private smallesLength$: Observable<1>
+  public categoryList$: Observable<Category[]>;
+  public topicList$: Observable<Topic[]>;
+  public settings$: Observable<Settings>
+  public maxCategoryTerms$:Observable<number>;
+  public maxTopicTerms$:Observable<number>;
+  public maxTopics$:Observable<number>;
   
-  constructor(@Inject(AppStore) private store: Store<AppState>) {
-    store.subscribe(() => this.readState());
-    this.readState();
-  }
-
-  private readState() {
-    const state: AppState = this.store.getState() as AppState;
-    this.categoryList = state.categoryList;
-    this.topicList = state.topicList;
+  constructor( private store: Store) {
+    this.categoryList$ = this.store.pipe(select(selectCategories));
+    this.topicList$ = this.store.pipe(select(selectTopics));
+    this.settings$ = this.store.pipe(select(selectSettings));
+    this.maxCategoryTerms$ = this.getSmallestLengthOfLists('category');
+    this.maxTopicTerms$ = this.getSmallestLengthOfLists('topic');
+    this.maxTopics$ = this.getNumberOfTopics();
   }
 
   private returnRendomIndexFromTermList(listLength:number):number{
@@ -27,46 +31,72 @@ export class AppService {
     return RANDOM;
   }
 
-  private collectRandomTerms(list:Category[]|Topic[]):void{
+  private collectRandomTerms(list:Category[]|Topic[]):string[]{
+    var randomTerms = [];
     list.forEach((item, ind) => {
-      var randomIndex = this.returnRendomIndexFromTermList(list[ind].term.length);
-      this.randomTermList.push(item.term[randomIndex]);
+      var randomIndex = this.returnRendomIndexFromTermList(list[ind].terms.length);
+      randomTerms.push(item.terms[randomIndex]);
     });
+    return randomTerms;
   }
 
-  private checkSmallestLength(listName:string):number{ 
+  private checkSmallestLength(listName:string):Observable<number>{ 
     var lists = [];
-    this[listName+'List'].forEach((item)=>{
-      lists.push(item.term.length)
-    })
-    return Math.min(...lists);
+    return this[listName+'List$'].pipe(
+      map((list:Category[]|Topic[]) => {
+        list.forEach((item)=>{
+          lists.push(item.terms.length)
+        })
+        return Math.min(...lists);
+      })
+    )
   }
   
-  public getRandomTerms():string[]{
-    this.randomTermList = []
-    this.collectRandomTerms(this.topicList);
-    this.collectRandomTerms(this.categoryList);
-    return this.randomTermList;
+  public getRandomTerms():Observable<string[]>{
+    this.randomTermList$ = combineLatest([
+      this.categoryList$,
+      this.topicList$,
+    ]).pipe(
+      map(
+      (combinedList:[Category[],Topic[]])=>{
+        var result = [];
+        combinedList.forEach(list => 
+          result = [...result,... this.collectRandomTerms(list)]
+        );
+        return result;
+      }
+    ))
+    return this.randomTermList$;
   }
 
-  public getListByName(listName:string):Category[]|Topic[]{
+  public getSmallestLengthOfLists(listName:string):Observable<number>{
     switch(listName){
-      case 'category': return this.categoryList;
-      case 'topic': return this.topicList;
-      default: return []
-    }
-  }
-
-  public getSmallestLengthOfLists(listName:string):number{
-    switch(listName){
-      case 'category': return this.checkSmallestLength(listName);
+      case 'category': return this.checkSmallestLength(listName);  
+      break;
       case 'topic': return this.checkSmallestLength(listName);
-      default: return 1
+      break;
+      default: return this.smallesLength$;
     }
+  } 
+
+  public getSettingByName(settingName: string):Observable<number>{
+    return this.settings$.pipe(
+      map(settings=>{
+        switch(settingName){
+          case 'termsPerCategory': return settings.termsPerCategory;
+          break;
+          case 'termsPerTopic': return settings.termsPerTopic;
+          break;
+          case 'numberOfTopics': return settings.numberOfTopics;
+          break;
+          default: return 1;
+        }
+      })
+    )
   }
 
-  public getNumberOfTopics():number{
-    return this.topicList.length;
+  public getNumberOfTopics():Observable<number>{
+    return this.topicList$.pipe(map(topics=>topics.length));
   }
 }
 

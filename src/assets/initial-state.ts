@@ -1,64 +1,53 @@
-import { AppState } from '../app/types/app.state'
+import { AppState } from '../app/state/app.state'
 
-export const initialState: AppState = {
-    categoryList: [
+export const appState: AppState = {
+    categories: [
         {
             category:"Körper",
-            term:["Kegel","Würfel","Kugel","Quader","Prisma","Pyramide","Zylinder"],
-            numberOfTermns:1
+            terms:["Kegel","Würfel","Kugel","Quader","Prisma","Pyramide","Zylinder"]
         },{
             category:"Formen",
-            term:["Quadrat","Rechteck","Trapez","Dreieck","Raute","Kreis","Parrallelogramm","Ellipse","Mehreck"],
-            numberOfTermns:1
+            terms:["Quadrat","Rechteck","Trapez","Dreieck","Raute","Kreis","Parrallelogramm","Ellipse","Mehreck"]
         },{
             category:"Farben",
-            term:["Rot","Gelb","Blau","Grün","Orange","Lila","Weiß","Schwarz"],
-            numberOfTermns:1
+            terms:["Rot","Gelb","Blau","Grün","Orange","Lila","Weiß","Schwarz"]
         },{
             category:"Maltechnik",
-            term:["Lasur","Mit geschlossenen Augen","mit links","beidhändig","Nass-in-Nass","Collagieren","Spachteln","Aquarell","Acryl","Kreide","Wachskreide","Aqarellstifte","Tinte"],
-            numberOfTermns:1
+            terms:["Lasur","Mit geschlossenen Augen","mit links","beidhändig","Nass-in-Nass","Collagieren","Spachteln","Aquarell","Acryl","Kreide","Wachskreide","Aqarellstifte","Tinte"]
         },{
             category:"Emotionen",
-            term:["Freude","Wut","Angst","Ekel","Trauer","Überraschung","Liebe","Müde"],
-            numberOfTermns:1
+            terms:["Freude","Wut","Angst","Ekel","Trauer","Überraschung","Liebe","Müde"]
         },{
             category:"Muster",
-            term:["Streifen","Punkte","Flecken","Zacken","Karo","Rauten","Schuppen","Kringel","Wellen","Leo","Zebra","Tetris","Sterne","Herzen"],
-            numberOfTermns:1
+            terms:["Streifen","Punkte","Flecken","Zacken","Karo","Rauten","Schuppen","Kringel","Wellen","Leo","Zebra","Tetris","Sterne","Herzen"]
         }
     ],
-    topicList: [
+    topics: [
         {
             topic:"Haustiere", 
-            term:["Hund","Katze","Maus","Kuh", "Huhn", "Hahn", "Pferd", "Schwein", "Gans", "Hase", "Esel", "Ziege", "Schaf"],
-            numberOfTermns:1,
-            active: true
+            terms:["Hund","Katze","Maus","Kuh", "Huhn", "Hahn", "Pferd", "Schwein", "Gans", "Hase", "Esel", "Ziege", "Schaf"],
         },{
             topic:"Meerestiere",
-            term:["Auster","Garnele","Hai","Clownfisch","Delfin","Krabbe","Rochen","Seepferdchen","Tintenfisch","Pinguin","Oktopus","Walross"],
-            numberOfTermns:1,
-            active: true
+            terms:["Auster","Garnele","Hai","Clownfisch","Delfin","Krabbe","Rochen","Seepferdchen","Tintenfisch","Pinguin","Oktopus","Walross"],
         },{
             topic:"Wesen",
-            term:["Drachen","Feen","Zwerge","Hexe","Zauberer","Elfe","Einhorn","Engel"],
-            numberOfTermns:1,
-            active: true
+            terms:["Drachen","Feen","Zwerge","Hexe","Zauberer","Elfe","Einhorn","Engel"],
         },{
             topic:"Pflanzen",
-            term:["Baum","Blume","Beere","Obst","Gemüse","Pilze","Kaktus","Gras"],
-            numberOfTermns:1,
-            active: true
+            terms:["Baum","Blume","Beere","Obst","Gemüse","Pilze","Kaktus","Gras"],
         },{
             topic:"Kleidung",
-            term:["Jacke","Hose","Pullover","Schuhe","Mütze","Schal","T-Shirt","Hut"],
-            numberOfTermns:1,
-            active: true
+            terms:["Jacke","Hose","Pullover","Schuhe","Mütze","Schal","T-Shirt","Hut"],
         },{
             topic:"Transportmittel",
-            term:["Trecker","Bagger","Krahn","Auto","Buss","Fahrrad","Flugzeug","Zug","Helikopter","Boot","Motorrad","Roller"],
-            numberOfTermns:1,
-            active: true
+            terms:["Trecker","Bagger","Krahn","Auto","Buss","Fahrrad","Flugzeug","Zug","Helikopter","Boot","Motorrad","Roller"],
         }
-    ]
+    ],
+    settings: {
+        termsPerCategory: 1,
+        termsPerTopic: 1,
+        numberOfTopics: 1,
+        maxCategoryTerms: 1,
+        maxTopicTerms: 1
+    }
 }

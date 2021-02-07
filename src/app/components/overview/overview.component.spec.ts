@@ -1,5 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { OverviewComponent } from './overview.component';
 import { AppService } from 'src/app/services/app.service';
 
@@ -8,16 +8,20 @@ describe('OverviewComponent', () => {
   let fixture: ComponentFixture<OverviewComponent>;
 
   beforeEach(async(() => {
-    const spy = jasmine.createSpyObj('AppService', ['getListByName']);
-
+    let store: MockStore;
+    const spy = jasmine.createSpyObj('AppService', ['getSmallestLengthOfLists','getNumberOfTopics','getSettingByName','getNumberOfTopics']);
+    const initialState = {app:{}};
     TestBed.configureTestingModule({
       declarations: [ OverviewComponent ],
-      providers: [{provide: AppService, useValue: spy}]
+      providers: [
+        provideMockStore({ initialState }),
+        {provide: AppService, useValue: spy}]
     })
     .compileComponents();
   
     fixture = TestBed.createComponent(OverviewComponent);
     component = fixture.componentInstance;
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   }));
 

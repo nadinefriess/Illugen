@@ -2,10 +2,10 @@
 
     <mat-toolbar class="toolbar">
       <span class="title">{{title}}</span>
-      <a href="/overview" type="button" mat-icon-button class="action-icon overview" aria-label="Icon-button with eye icon">
+      <a routerLink="/overview" type="button" mat-icon-button class="action-icon overview" aria-label="Icon-button with eye icon">
         <mat-icon>remove_red_eye</mat-icon>
       </a>
-      <a href="/settings" type="button" mat-icon-button class="action-icon settings" aria-label="Icon-button with settings icon">
+      <a routerLink="/settings" type="button" mat-icon-button class="action-icon settings" aria-label="Icon-button with settings icon">
         <mat-icon>settings</mat-icon>
       </a>
     </mat-toolbar>
@@ -16,8 +16,8 @@
         <p>Drücke so oft Start bis dir bei der betrachtung der Begriffe eine Idee für deine Illustration in den Sinn kommt.</p>
       </div>
       <button (click)="onGenerateClick()" class="generate" mat-raised-button color="primary">start</button>
-      <ul *ngIf="result" class="result-list">
-        <li  *ngFor='let term of result'>
+      <ul *ngIf="result$|async" class="result-list">
+        <li  *ngFor='let term of result$|async'>
           {{term}}
         </li>
       </ul>

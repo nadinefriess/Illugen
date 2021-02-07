@@ -17,8 +17,10 @@ import { HomeComponent } from './components/home/home.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
-import { appStoreProviders } from './app.store';
-
+import { StoreModule } from '@ngrx/store';
+import { appReducer } from './state/app.reducer';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,9 +38,14 @@ import { appStoreProviders } from './app.store';
     MatCardModule,
     MatToolbarModule,
     MatIconModule,
-    MatExpansionModule  
+    MatExpansionModule,
+    StoreModule.forRoot({ app: appReducer}), 
+    StoreDevtoolsModule.instrument({
+      maxAge: 25, // Retains last 25 states
+      logOnly: environment.production, // Restrict extension to log-only mode
+    }), 
   ],
-  providers: [ appStoreProviders ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

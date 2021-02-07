@@ -1,4 +1,5 @@
 import { Component} from '@angular/core';
+import { Observable } from 'rxjs';
 import { AppService } from '../../services/app.service'
 
 @Component({
@@ -8,11 +9,11 @@ import { AppService } from '../../services/app.service'
 })
 export class HomeComponent {
   title = 'Illugen';
-  result: string[];
+  result$: Observable<string[]>;
 
   constructor(public appService: AppService) {}
 
   public onGenerateClick():void{
-    this.result = this.appService.getRandomTerms();
+    this.result$ = this.appService.getRandomTerms();
   }
 }
