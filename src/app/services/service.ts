@@ -1,28 +1,26 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, combineLatest} from 'rxjs';
+import { Observable, combineLatest, from, of} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Category, Topic } from '../state/state';
-import { selectCategories, selectTopics, selectSettings } from '../state/selectors';
+import * as fromSelectors from '../state/selectors';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
   private randomTermList$: Observable<string[]>;
   private smallesLength$: Observable<1>
-  public categoryList$: Observable<Category[]>;
-  public topicList$: Observable<Topic[]>;
-  public maxCategoryTerms$:Observable<number>;
-  public maxTopicTerms$:Observable<number>;
-  public maxTopics$:Observable<number>;
-  
-  constructor(private store: Store) {
-    this.categoryList$ = this.store.pipe(select(selectCategories));
-    this.topicList$ = this.store.pipe(select(selectTopics));
-    this.maxCategoryTerms$ = this.getSmallestLengthOfLists('category');
-    this.maxTopicTerms$ = this.getSmallestLengthOfLists('topic');
-    this.maxTopics$ = this.getNumberOfTopics();
-  }
+  public categoryList$: Observable<Category[]> = this.store.pipe(select(fromSelectors.selectCategories));
+  public topicList$: Observable<Topic[]> = this.store.pipe(select(fromSelectors.selectTopics));
+  public maxCategoryTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxCategoryTerms));
+  public maxTopicTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxTopicTerms));
+  public maxTopics$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxTopics));
+  public termsPerCategory$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerCategory));
+  public termsPerTopic$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerTopic));
+  public numberOfTopics$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfTopics));
+
+  constructor(private store: Store) {}
 
   private returnRendomIndexFromTermList(listLength:number):number{
     const RANDOM = Math.floor(Math.random() * listLength);
@@ -48,6 +46,31 @@ export class AppService {
         return Math.min(...lists);
       })
     )
+  }
+
+  private checkMax(obs1:Observable<number>,obs2:Observable<number>):boolean{
+    var checkMax = false;
+     combineLatest([
+       obs1,
+       obs2
+     ]).pipe(
+       map((combined)=>{
+        if(combined[0]<combined[1])
+        return true;
+       })
+     ).subscribe(value=> checkMax=value).unsubscribe();
+     return checkMax;
+   }
+
+   private checkMin(obs1:Observable<number>):boolean{
+    var checkMin = false;
+    obs1.pipe(
+      map(number=>{
+       if(number > 1)
+       return true;      
+      })
+    ).subscribe(value=>checkMin=value).unsubscribe();
+    return checkMin;
   }
   
   public getRandomTerms():Observable<string[]>{
@@ -77,24 +100,46 @@ export class AppService {
     }
   } 
 
-  public getSettingValueByName(settingName: string):Observable<number>{
-    return this.store.pipe(select(selectSettings),
-      map(settings=>{
-        switch(settingName){
-          case 'termsPerCategory': return settings.termsPerCategory;
-          break;
-          case 'termsPerTopic': return settings.termsPerTopic;
-          break;
-          case 'numberOfTopics': return settings.numberOfTopics;
-          break;
-          default: return 1;
-        }
-      })
-    )
+  public checkMaxValueBySettingName(settingName:string):Observable<string>{
+    switch(settingName){
+      case 'termsPerCategory': {
+        if(this.checkMax(this.termsPerCategory$,this.maxCategoryTerms$))
+        return of(settingName);
+        break;
+      }
+      case 'termsPerTopic': {
+        if(this.checkMax(this.termsPerTopic$,this.maxTopicTerms$))
+        return of(settingName);
+        break;
+      }
+      case 'numberOfTopics': {
+        if(this.checkMax(this.numberOfTopics$,this.maxTopics$))
+        return of(settingName);
+        break;
+      }
+      default: return of('');
+    }  
   }
 
-  public getNumberOfTopics():Observable<number>{
-    return this.topicList$.pipe(map(topics=>topics.length));
-  }
+   public checkMinValueBySettingName(settingName:string): Observable<string>{
+    switch(settingName){
+      case 'termsPerCategory':{
+        if(this.checkMin(this.termsPerCategory$)) 
+        return of(settingName);
+        break;
+      }
+      case 'termsPerTopic':{
+        if(this.checkMin(this.termsPerTopic$)) 
+        return of(settingName);
+        break;
+      }
+      case 'numberOfTopics':{
+        if(this.checkMin(this.numberOfTopics$)) 
+        return of(settingName);
+        break;
+      }
+      default: return from('');
+    }
+   }
 }
 

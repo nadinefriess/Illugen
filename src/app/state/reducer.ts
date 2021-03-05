@@ -1,14 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
 import { AppState} from '../state/state';
 import { appState } from '../../assets/initial-state';
-import { incrementSettings,decrementSettings } from './actions';
-
+import { decrementSettingsSuccess, incrementSettingsSuccess } from './actions';
 
 export const initialState: AppState = appState;
 
 export const appReducer = createReducer(
   initialState,
-  on(incrementSettings, (state, { settingName }) => {
+  on(incrementSettingsSuccess, (state, { settingName }) => {
     switch(settingName){
       case 'termsPerCategory': {
         var termsPerCategory = state.settings.termsPerCategory + 1;
@@ -31,7 +30,7 @@ export const appReducer = createReducer(
       default: state;
     }
   }),
-  on(decrementSettings, (state, { settingName }) => {
+  on(decrementSettingsSuccess, (state, { settingName }) => {
     switch(settingName){
       case 'termsPerCategory': {
         var termsPerCategory = state.settings.termsPerCategory - 1;

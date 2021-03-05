@@ -23,5 +23,6 @@ export interface Settings {
     termsPerTopic:number,
     numberOfTopics:number, //equals maxTopics
     maxCategoryTerms: number,
-    maxTopicTerms: number
+    maxTopicTerms: number,
+    maxTopics: number
 }

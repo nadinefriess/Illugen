@@ -1,90 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { combineLatest, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { AppService } from 'src/app/services/service';
-import { selectSettings } from 'src/app/state/selectors';
+import { Observable } from 'rxjs';
+import * as fromSelectors from 'src/app/state/selectors';
 import { decrementSettings, incrementSettings } from '../../state/actions';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss']
 })
-export class SettingsComponent implements OnInit{
-  public maxCategoryTerms$:Observable<number>;
-  public maxTopicTerms$:Observable<number>;
-  public maxTopics$:Observable<number>;
-  public termsPerCategory$:Observable<number>;
-  public termsPerTopic$:Observable<number>;
-  public numberOfTopics$:Observable<number>;
+export class SettingsComponent{
+  public maxCategoryTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxCategoryTerms));
+  public maxTopicTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxTopicTerms));
+  public maxTopics$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxTopics));
+  public termsPerCategory$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerCategory));
+  public termsPerTopic$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerTopic));
+  public numberOfTopics$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfTopics));
 
-  constructor(private store: Store, private appService: AppService) {}
+  constructor(private store: Store) {}
 
-  ngOnInit(){
-    this.maxCategoryTerms$ = this.appService.maxCategoryTerms$;
-    this.maxTopicTerms$ = this.appService.maxTopicTerms$;
-    this.maxTopics$ = this.appService.maxTopics$;
-    this.termsPerCategory$ = this.appService.getSettingValueByName('termsPerCategory');
-    this.termsPerTopic$ = this.appService.getSettingValueByName('termsPerTopic');
-    this.numberOfTopics$ = this.appService.getSettingValueByName('numberOfTopics');
-    }
-
-  private checkMax(obs1:Observable<number>,obs2:Observable<number>):boolean{
-   var checkMax = false;
-    combineLatest([
-      obs1,
-      obs2
-    ]).pipe(
-      map((combined)=>{
-       if(combined[0]<combined[1])
-       return true;
-      })
-    ).subscribe(value=> checkMax=value).unsubscribe();
-    return checkMax;
+  public increment(setting:string):void{
+    this.store.dispatch(incrementSettings({settingName: setting}));
   }
 
-  private checkMin(obs1:Observable<number>):boolean{
-    var checkMin = false;
-    obs1.pipe(
-      map(number=>{
-       if(number > 1)
-       return true;      
-      })
-    ).subscribe(value=>checkMin=value).unsubscribe();
-    return checkMin;
-  }
-
-  public increment(type:string):void{
-    switch(type){
-      case 'termsPerCategory': 
-      if(this.checkMax(this.termsPerCategory$,this.maxCategoryTerms$))
-      this.store.dispatch(incrementSettings({settingName: 'termsPerCategory'}));
-      break;
-      case 'termsPerTopic': 
-      if(this.checkMax(this.termsPerTopic$,this.maxTopicTerms$))
-      this.store.dispatch(incrementSettings({settingName: 'termsPerTopic'}));
-      break;
-      case 'numberOfTopics': 
-      if(this.checkMax(this.numberOfTopics$,this.maxTopics$))
-      this.store.dispatch(incrementSettings({settingName: 'numberOfTopics'}));
-      break;
-    }
-  }
-
-  public decrement(type:string):void{
-    switch(type){
-      case 'termsPerCategory':
-        if(this.checkMin(this.termsPerCategory$)) 
-        this.store.dispatch(decrementSettings({settingName: 'termsPerCategory'}));
-      break;
-      case 'termsPerTopic':
-        if(this.checkMin(this.termsPerTopic$)) 
-        this.store.dispatch(decrementSettings({settingName: 'termsPerTopic'}));
-      break;
-      case 'numberOfTopics':
-        if(this.checkMin(this.numberOfTopics$)) 
-        this.store.dispatch(decrementSettings({settingName: 'numberOfTopics'}));
-      break;
-    }
+  public decrement(setting:string):void{
+   this.store.dispatch(decrementSettings({settingName: setting}));
   }
 }

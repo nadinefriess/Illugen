@@ -47,7 +47,8 @@ export const appState: AppState = {
         termsPerCategory: 1,
         termsPerTopic: 1,
         numberOfTopics: 1,
-        maxCategoryTerms: 1,
-        maxTopicTerms: 1
+        maxCategoryTerms: 7,
+        maxTopicTerms: 8,
+        maxTopics: 6
     }
 }

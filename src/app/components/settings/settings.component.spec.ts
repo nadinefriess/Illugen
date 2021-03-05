@@ -3,7 +3,7 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { SettingsComponent } from './settings.component';
 import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
-import { cold, getTestScheduler } from 'jasmine-marbles';
+import { getTestScheduler } from 'jasmine-marbles';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -66,13 +66,6 @@ describe('SettingsComponent', () => {
   });
 
   it(`should render setting label with corresponding max value`, () => {
-    appServiceSpy.maxCategoryTerms$ = cold('a',{a:7})
-    appServiceSpy.maxTopicTerms$ = cold('a',{a:8})
-    appServiceSpy.maxTopics$ = cold('a',{a:6})
-    component.ngOnInit();
-    fixture.detectChanges(); 
-    getTestScheduler().flush(); // flush the observables
-    fixture.detectChanges(); 
     const settingLabels = fixture.nativeElement.querySelectorAll('.setting-label');
     expect(settingLabels.length).toBe(3);
     expect(settingLabels[0].innerText).toEqual('Begriffe pro Kategorie (max.: 7)');
@@ -81,11 +74,6 @@ describe('SettingsComponent', () => {
   });
 
   it(`should render counter with corresponding setting value`, () => {
-    appServiceSpy.getSettingValueByName.and.returnValue(cold('a',{a:1}))
-    component.ngOnInit();
-    fixture.detectChanges(); 
-    getTestScheduler().flush(); // flush the observables
-    fixture.detectChanges(); 
     const counter1 = fixture.nativeElement.querySelector('.counter-max-category-terms');
     const counter2 = fixture.nativeElement.querySelector('.counter-max-topic-terms');
     const counter3 = fixture.nativeElement.querySelector('.counter-max-topics');
@@ -96,28 +84,11 @@ describe('SettingsComponent', () => {
   
   it('should increment counter value on action dispatch', () => {
     let compSpy = spyOn(component, 'increment').and.callThrough();
-    let mockStoreSpy = spyOn()
-    appServiceSpy.getSettingValueByName.and.returnValue(cold('a',{a:1}))
-    component.ngOnInit();
-    fixture.detectChanges(); 
-    getTestScheduler().flush(); // flush the observables
-    fixture.detectChanges();
     const counter1 = fixture.nativeElement.querySelector('.counter-max-category-terms');
     expect(counter1.innerText).toBe('1');
-    
     component.increment('termsPerCategory');
     fixture.detectChanges();
-    expect(compSpy).toHaveBeenCalledTimes(1);
-
-    
+    expect(compSpy).toHaveBeenCalledTimes(1)
+    // TODO: finish test
   });
-
-  // it('should increment setting and update the state in an immutable way', () => {
-  //   const initialState = mockedState;
-  //   const action = incrementSettings({settingName:'termsPerCategory'});
-  //   const state = fromReducer.appReducer(initialState, action);
-  //   const newState = {...mockedState, settings: {...mockedState.settings, termsPerCategory: 3}}
-  //   expect(state).toEqual(newState);
-  //   expect(state).not.toBe(newState);
-  // });
 });

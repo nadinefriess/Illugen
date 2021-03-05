@@ -11,29 +11,31 @@ describe("Selectors", () => {
         termsPerTopic: 1,
         numberOfTopics: 1,
         maxCategoryTerms: 1,
-        maxTopicTerms: 1
+        maxTopicTerms: 1,
+        maxTopics: 1
       }
     }
   };
 
   it("should select the category list", () => {
-    const result = fromSelectors.selectCategories.projector(initialState);    
+    const result = fromSelectors.selectCategories(initialState);    
     expect(result.length).toEqual(1);
     expect(result[0].category).toEqual("Testcategory"); 
   });
   
   it("should select the topic list", () => {
-    const result = fromSelectors.selectTopics.projector(initialState);
+    const result = fromSelectors.selectTopics(initialState);
     expect(result.length).toEqual(1);
     expect(result[0].topic).toEqual("Testtopic");
   });
 
   it("should select the settings", () => {
-    const result = fromSelectors.selectSettings.projector(initialState);
+    const result = fromSelectors.selectSettings(initialState);
     expect(result.termsPerCategory).toEqual(1);
     expect(result.termsPerTopic).toEqual(1);
     expect(result.numberOfTopics).toEqual(1);
     expect(result.maxCategoryTerms).toEqual(1);
     expect(result.maxTopicTerms).toEqual(1);
+    expect(result.maxTopics).toEqual(1);
   });
 });
