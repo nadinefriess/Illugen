@@ -1,6 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/service';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 
 describe('HomeComponent', () => {

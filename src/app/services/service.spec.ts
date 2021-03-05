@@ -1,8 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
-import { map } from 'rxjs/operators';
 
-import { AppService } from './app.service';
+import { AppService } from './service';
 
 describe('AppService', () => {
   let service: AppService;

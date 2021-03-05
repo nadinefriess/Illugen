@@ -18,7 +18,7 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { SettingsComponent } from './components/settings/settings.component';
 
 import { StoreModule } from '@ngrx/store';
-import { appReducer } from './state/app.reducer';
+import { appReducer } from './state/reducer';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 @NgModule({

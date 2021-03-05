@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { Observable, combineLatest} from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Category, Topic, Settings } from '../state/app.state';
-import { selectCategories, selectTopics, selectSettings } from '../state/app.selectors';
+import { Category, Topic } from '../state/state';
+import { selectCategories, selectTopics, selectSettings } from '../state/selectors';
 @Injectable({
   providedIn: 'root'
 })

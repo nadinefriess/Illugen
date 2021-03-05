@@ -1,4 +1,4 @@
-import { AppState } from '../app/state/app.state'
+import { AppState } from '../app/state/state'
 
 export const appState: AppState = {
     categories: [

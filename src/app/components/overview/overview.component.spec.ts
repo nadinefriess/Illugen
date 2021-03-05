@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { OverviewComponent } from './overview.component';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
 
 describe('OverviewComponent', () => {

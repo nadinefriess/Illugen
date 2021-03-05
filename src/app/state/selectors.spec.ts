@@ -1,5 +1,5 @@
-import { State } from "./app.state";
-import * as fromSelectors from './app.selectors';
+import { State } from "./state";
+import * as fromSelectors from './selectors';
 
 describe("Selectors", () => {
   const initialState: State = {

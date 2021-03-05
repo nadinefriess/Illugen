@@ -1,5 +1,5 @@
-import * as fromReducer from './app.reducer';
-import { decrementSettings, incrementSettings } from './app.actions';
+import * as fromReducer from './reducer';
+import { decrementSettings, incrementSettings } from './actions';
 
 describe('AppReducer', () => {
   describe('unknown action', () => {

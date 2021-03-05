@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
-import { AppState} from '../state/app.state';
+import { AppState} from '../state/state';
 import { appState } from '../../assets/initial-state';
-import { incrementSettings,decrementSettings } from './app.actions';
+import { incrementSettings,decrementSettings } from './actions';
 
 
 export const initialState: AppState = appState;

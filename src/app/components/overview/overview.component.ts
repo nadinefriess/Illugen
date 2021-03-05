@@ -2,8 +2,8 @@ import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Store, select } from "@ngrx/store";
 import { Observable } from 'rxjs';
-import { selectCategories, selectTopics } from 'src/app/state/app.selectors';
-import { Category, Topic } from 'src/app/state/app.state';
+import { selectCategories, selectTopics } from 'src/app/state/selectors';
+import { Category, Topic } from 'src/app/state/state';
 
 @Component({
   selector: 'app-overview',

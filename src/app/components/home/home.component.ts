@@ -1,6 +1,6 @@
 import { Component} from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppService } from '../../services/app.service'
+import { AppService } from '../../services/service'
 
 @Component({
   selector: 'app-home',

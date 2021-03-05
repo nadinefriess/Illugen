@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AppService } from 'src/app/services/app.service';
-import { selectSettings } from 'src/app/state/app.selectors';
-import { decrementSettings, incrementSettings } from '../../state/app.actions';
+import { AppService } from 'src/app/services/service';
+import { selectSettings } from 'src/app/state/selectors';
+import { decrementSettings, incrementSettings } from '../../state/actions';
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',

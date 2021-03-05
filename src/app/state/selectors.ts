@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { State, AppState } from "./app.state";
+import { State, AppState } from "./state";
 
 export const selectApp = createSelector(
     (state: State)=> state.app,

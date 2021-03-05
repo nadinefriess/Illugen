@@ -1,10 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { SettingsComponent } from './settings.component';
-import { AppService } from 'src/app/services/app.service';
+import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
 import { cold, getTestScheduler } from 'jasmine-marbles';
-import { Mock } from 'protractor/built/driverProviders';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
