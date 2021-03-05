@@ -13,22 +13,16 @@
     <mat-card-content class="content">
             <mat-expansion-panel class="data-lists" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Kategorie
-                    </mat-panel-title>
+                    <mat-panel-title class="categories">Kategorien</mat-panel-title>
                 </mat-expansion-panel-header>
                 
                 <mat-accordion *ngFor='let item of categoryList$ | async'>
-                    <mat-expansion-panel class="data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel class="category-list data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{item.category}}
-                            </mat-panel-title>
+                            <mat-panel-title class="category-title">{{item.category}}</mat-panel-title>
                         </mat-expansion-panel-header>
                         <ul *ngIf="item" class="item-list">
-                            <li  *ngFor='let term of item.term'>
-                                {{term}}
-                            </li>
+                            <li class="category-term" *ngFor='let term of item.terms'>{{term}}</li>
                         </ul>
                     </mat-expansion-panel>
                 </mat-accordion>
@@ -37,22 +31,16 @@
     
             <mat-expansion-panel class="data-lists" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        Themen
-                    </mat-panel-title>
+                    <mat-panel-title class="topics">Themen</mat-panel-title>
                 </mat-expansion-panel-header>
                 
                 <mat-accordion *ngFor='let item of topicList$ | async'>
-                    <mat-expansion-panel class="data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel class="topic-list data-list" *ngIf="item" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
                         <mat-expansion-panel-header>
-                            <mat-panel-title>
-                                {{item.topic}}
-                            </mat-panel-title>
+                            <mat-panel-title class="topic-title">{{item.topic}}</mat-panel-title>
                         </mat-expansion-panel-header>
                         <ul *ngIf="item" class="item-list">
-                            <li  *ngFor='let term of item.term'>
-                                {{term}}
-                            </li>
+                            <li  class="topic-term" *ngFor='let term of item.terms'>{{term}}</li>
                         </ul>
                     </mat-expansion-panel>
                 </mat-accordion>

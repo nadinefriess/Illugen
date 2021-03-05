@@ -1,12 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 
 export const incrementSettings = createAction(
-  '[Settings] Increement Setting',
+  '[Settings] Increment Setting',
   props<{settingName:string}>()
 );
 
 export const decrementSettings = createAction(
-  '[Settings] Decreement Setting',
+  '[Settings] Decrement Setting',
   props<{settingName:string}>()
 );
   

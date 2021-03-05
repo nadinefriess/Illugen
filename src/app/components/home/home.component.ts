@@ -7,7 +7,7 @@ import { AppService } from '../../services/app.service'
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent{
   title = 'Illugen';
   result$: Observable<string[]>;
 

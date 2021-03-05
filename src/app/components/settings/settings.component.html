@@ -1,7 +1,7 @@
 <mat-card class="app">
 
     <mat-toolbar class="toolbar">
-        <a routerLink="/" type="button" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+        <a routerLink="/" type="button" mat-icon-button class="action-icon back" aria-label="Icon-button with arrow left icon">
             <mat-icon>arrow_back_ios</mat-icon>
         </a>
         <span class="title">Einstellungen</span>
@@ -11,38 +11,38 @@
         <div class="hint">
             <p>Wähle die maximal zu berücksichtigten Begriffe und die Anzahl der Themen aus.</p>
         </div> 
-        <div class="setting">
-            <p>Begriffe pro Kategorie (max.: {{maxCategoryTerms$|async}})</p>
-            <div class='counter'>
-                <button (click)="decrement('termsPerCategory')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+        <div class="setting-max-category-terms">
+            <p class="setting-label">Begriffe pro Kategorie (max.: {{maxCategoryTerms$|async}})</p>
+            <div>
+                <button (click)="decrement('termsPerCategory')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </button>
-                <span>{{termsPerCategory$|async}}</span>
-                <button (click)="increment('termsPerCategory')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                <span class='counter-max-category-terms'>{{termsPerCategory$|async}}</span>
+                <button (click)="increment('termsPerCategory')" mat-icon-button class="action-icon increment" aria-label="Icon-button with arrow right icon">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </button>
             </div>
         </div>
-        <div class="setting">
-            <p>Begriffe pro Thema (max.: {{maxTopicTerms$|async}})</p>
-            <div class='counter'>
-                <button (click)="decrement('termsPerTopic')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+        <div class="setting-max-topic-terms">
+            <p class="setting-label">Begriffe pro Thema (max.: {{maxTopicTerms$|async}})</p>
+            <div>
+                <button (click)="decrement('termsPerTopic')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </button>
-                <span>{{termsPerTopic$|async}}</span>
-                <button (click)="increment('termsPerTopic')"mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                <span class='counter-max-topic-terms'>{{termsPerTopic$|async}}</span>
+                <button (click)="increment('termsPerTopic')"mat-icon-button class="action-icon increment" aria-label="Icon-button with arrow right icon">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </button>
             </div>
         </div>
-        <div class="setting">
-            <p>Anzahl der Themen (max: {{maxTopics$|async}})</p>
-            <div class='counter'>
-                <button (click)="decrement('numberOfTopics')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow left icon">
+        <div class="setting-max-topics">
+            <p class="setting-label">Anzahl der Themen (max: {{maxTopics$|async}})</p>
+            <div>
+                <button (click)="decrement('numberOfTopics')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
                     <mat-icon>keyboard_arrow_left</mat-icon>
                 </button>
-                <span>{{numberOfTopics$|async}}</span>
-                <button (click)="increment('numberOfTopics')" mat-icon-button class="action-icon" aria-label="Icon-button with arrow right icon">
+                <span class='counter-max-topics'>{{numberOfTopics$|async}}</span>
+                <button (click)="increment('numberOfTopics')" mat-icon-button class="action-icon increment" aria-label="Icon-button with arrow right icon">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </button>
             </div>

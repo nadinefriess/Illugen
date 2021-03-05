@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AppService } from 'src/app/services/app.service';
+import { selectSettings } from 'src/app/state/app.selectors';
 import { decrementSettings, incrementSettings } from '../../state/app.actions';
 @Component({
   selector: 'app-settings',
@@ -23,10 +24,10 @@ export class SettingsComponent implements OnInit{
     this.maxCategoryTerms$ = this.appService.maxCategoryTerms$;
     this.maxTopicTerms$ = this.appService.maxTopicTerms$;
     this.maxTopics$ = this.appService.maxTopics$;
-    this.termsPerCategory$ = this.appService.getSettingByName('termsPerCategory');
-    this.termsPerTopic$ = this.appService.getSettingByName('termsPerTopic');
-    this.numberOfTopics$ = this.appService.getSettingByName('numberOfTopics');
-  }
+    this.termsPerCategory$ = this.appService.getSettingValueByName('termsPerCategory');
+    this.termsPerTopic$ = this.appService.getSettingValueByName('termsPerTopic');
+    this.numberOfTopics$ = this.appService.getSettingValueByName('numberOfTopics');
+    }
 
   private checkMax(obs1:Observable<number>,obs2:Observable<number>):boolean{
    var checkMax = false;

@@ -1,24 +1,39 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { AppService } from 'src/app/services/app.service';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let appServiceSpy: jasmine.SpyObj<AppService>;
+  let spy = jasmine.createSpyObj(
+    'AppService',
+      [
+        'returnRendomIndexFromTermList',
+        'collectRandomTerms',
+        'checkSmallestLength',
+        'getRandomTerms',
+        'getSmallestLengthOfLists',
+        'getSettingValueByName',
+        'getNumberOfTopics'
+      ],[
+        'categoryList$',
+        'topicList$',
+        'settings$'
+      ]
+    );
 
-  beforeEach(async(() => {
-    const spy = jasmine.createSpyObj('AppService', ['getRandomTerms']);
-
+  beforeEach(async(() => {  
     TestBed.configureTestingModule({
-      declarations: [ HomeComponent ],
-      providers: [{provide: AppService, useValue: spy}]
-    })
-    .compileComponents();
-    
+      declarations: [HomeComponent],
+      providers: [{ provide: AppService, useValue: spy}],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    appServiceSpy = TestBed.inject(AppService) as jasmine.SpyObj<AppService>;
+    fixture.detectChanges(); 
   }));
 
   it('should create', () => {
@@ -30,16 +45,15 @@ describe('HomeComponent', () => {
     const title = fixture.nativeElement.querySelector('.title')
     const overview = fixture.nativeElement.querySelector('.overview')
     const settings = fixture.nativeElement.querySelector('.settings')
-    fixture.detectChanges();
     expect(toolbar).toBeDefined();
     expect(title.innerText).toEqual('Illugen');
     expect(overview.textContent).toEqual('remove_red_eye');
     expect(settings.textContent).toEqual('settings');
   });
 
-  it(`should render a hint text`, () => {
+  it(`should render a hint`, () => {
     const hint = fixture.nativeElement.querySelector('.hint')
-    expect(hint).toBeDefined();
+    expect(hint.textContent).toEqual('Generiere zufällige Begriffe für eine Illustration indem du auf start drückst. Drücke so oft Start bis dir bei der Betrachtung der Begriffe eine Idee für deine Illustration in den Sinn kommt.');
   });
 
   it('should render generate button', () => {
@@ -48,20 +62,24 @@ describe('HomeComponent', () => {
     expect(button.textContent).toContain('start');
   });
 
-  it('should call generate function ', async(() => {
+  it('should call function on button click', () => {
     const button = fixture.nativeElement.querySelector('.generate')
     spyOn(component, 'onGenerateClick');
     button.click();
-    fixture.detectChanges()
+    fixture.detectChanges(); 
     expect(component.onGenerateClick).toHaveBeenCalled();
-  }));
-
-  it('should render list', ()=>{
-    const button = fixture.nativeElement.querySelector('.generate');
-    button.click();
-    fixture.detectChanges();
-    const list = fixture.nativeElement.querySelector('.resultList');
-    expect(list).toBeDefined();
   });
-
+  
+  it('should render list with terms',  () =>  {
+    appServiceSpy.getRandomTerms.and.returnValue(cold('a',{a:['Kreis','Blau','Hund']}))
+    component.onGenerateClick();
+    fixture.detectChanges(); 
+    getTestScheduler().flush(); // flush the observables
+    fixture.detectChanges(); 
+    const list = fixture.nativeElement.querySelectorAll('.term');
+    expect(list.length).toBe(3);
+    expect(list[0].innerText).toBe('Kreis');
+    expect(list[1].innerText).toBe('Blau');
+    expect(list[2].innerText).toBe('Hund');
+  });
 })

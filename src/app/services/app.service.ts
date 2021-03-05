@@ -12,15 +12,13 @@ export class AppService {
   private smallesLength$: Observable<1>
   public categoryList$: Observable<Category[]>;
   public topicList$: Observable<Topic[]>;
-  public settings$: Observable<Settings>
   public maxCategoryTerms$:Observable<number>;
   public maxTopicTerms$:Observable<number>;
   public maxTopics$:Observable<number>;
   
-  constructor( private store: Store) {
+  constructor(private store: Store) {
     this.categoryList$ = this.store.pipe(select(selectCategories));
     this.topicList$ = this.store.pipe(select(selectTopics));
-    this.settings$ = this.store.pipe(select(selectSettings));
     this.maxCategoryTerms$ = this.getSmallestLengthOfLists('category');
     this.maxTopicTerms$ = this.getSmallestLengthOfLists('topic');
     this.maxTopics$ = this.getNumberOfTopics();
@@ -79,8 +77,8 @@ export class AppService {
     }
   } 
 
-  public getSettingByName(settingName: string):Observable<number>{
-    return this.settings$.pipe(
+  public getSettingValueByName(settingName: string):Observable<number>{
+    return this.store.pipe(select(selectSettings),
       map(settings=>{
         switch(settingName){
           case 'termsPerCategory': return settings.termsPerCategory;
