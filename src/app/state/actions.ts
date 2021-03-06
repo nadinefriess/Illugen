@@ -19,3 +19,12 @@ export const decrementSettingsSuccess = createAction(
   '[Settings] Decrement Setting Success',
   props<{settingName:string}>()
 );
+
+export const createRandomTerms = createAction(
+  '[App] Create Random Terms'
+);
+
+export const createRandomTermsSuccess = createAction(
+  '[App] Create Random Terms Success',
+  props<{randomTerms:string[]}>()
+);

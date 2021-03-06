@@ -1,9 +1,13 @@
-import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { AppService } from 'src/app/services/service';
-import { cold, getTestScheduler } from 'jasmine-marbles';
+import { getTestScheduler } from 'jasmine-marbles';
+import { appState } from 'src/assets/initial-state';
+import { provideMockStore } from '@ngrx/store/testing';
+import { of } from 'rxjs';
 
 describe('HomeComponent', () => {
+  const initialState = {app: appState};
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let appServiceSpy: jasmine.SpyObj<AppService>;
@@ -27,7 +31,9 @@ describe('HomeComponent', () => {
   beforeEach(async(() => {  
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
-      providers: [{ provide: AppService, useValue: spy}],
+      providers: [
+        provideMockStore({ initialState }),
+        { provide: AppService, useValue: spy}],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HomeComponent);
@@ -71,10 +77,7 @@ describe('HomeComponent', () => {
   });
   
   it('should render list with terms',  () =>  {
-    appServiceSpy.getRandomTerms.and.returnValue(cold('a',{a:['Kreis','Blau','Hund']}))
-    component.onGenerateClick();
-    fixture.detectChanges(); 
-    getTestScheduler().flush(); // flush the observables
+    component.rendomTerms$ = of(['Kreis','Blau','Hund']); 
     fixture.detectChanges(); 
     const list = fixture.nativeElement.querySelectorAll('.term');
     expect(list.length).toBe(3);

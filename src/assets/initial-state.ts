@@ -50,5 +50,6 @@ export const appState: AppState = {
         maxCategoryTerms: 7,
         maxTopicTerms: 8,
         maxTopics: 6
-    }
+    },
+    randomTerms: null
 }

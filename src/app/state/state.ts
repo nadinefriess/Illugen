@@ -5,7 +5,8 @@ export interface State {
 export interface AppState {
     categories: Category[],
     topics: Topic[],
-    settings: Settings
+    settings: Settings,
+    randomTerms: string[]
 }
 
 export interface Category{

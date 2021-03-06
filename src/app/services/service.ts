@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { Observable, combineLatest, from, of} from 'rxjs';
+import { Observable, combineLatest, of, throwError} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Category, Topic } from '../state/state';
 import * as fromSelectors from '../state/selectors';
@@ -73,18 +73,18 @@ export class AppService {
     return checkMin;
   }
   
-  public getRandomTerms():Observable<string[]>{
+  public getRandomTerms():Observable<string[]>{    
     this.randomTermList$ = combineLatest([
       this.categoryList$,
       this.topicList$,
     ]).pipe(
       map(
-      (combinedList:[Category[],Topic[]])=>{
-        var result = [];
-        combinedList.forEach(list => 
-          result = [...result,... this.collectRandomTerms(list)]
-        );
-        return result;
+        (combinedList:[Category[],Topic[]])=>{
+          var result = [];
+          combinedList.forEach(list => 
+            result = [...result,... this.collectRandomTerms(list)]
+            );
+            return result;
       }
     ))
     return this.randomTermList$;
@@ -92,54 +92,51 @@ export class AppService {
 
   public getSmallestLengthOfLists(listName:string):Observable<number>{
     switch(listName){
-      case 'category': return this.checkSmallestLength(listName);  
-      break;
-      case 'topic': return this.checkSmallestLength(listName);
-      break;
-      default: return this.smallesLength$;
+      case 'category': 
+        return this.checkSmallestLength(listName);  
+        break;
+      case 'topic': 
+        return this.checkSmallestLength(listName);
+        break;
+      default: 
+        return this.smallesLength$;
     }
   } 
 
   public checkMaxValueBySettingName(settingName:string):Observable<string>{
+    let error$ = throwError('Maximum value reached!');
+    let result$ = of(settingName); 
     switch(settingName){
-      case 'termsPerCategory': {
-        if(this.checkMax(this.termsPerCategory$,this.maxCategoryTerms$))
-        return of(settingName);
+      case 'termsPerCategory':
+        return this.checkMax(this.termsPerCategory$,this.maxCategoryTerms$)?result$:error$;
         break;
-      }
-      case 'termsPerTopic': {
-        if(this.checkMax(this.termsPerTopic$,this.maxTopicTerms$))
-        return of(settingName);
+      case 'termsPerTopic': 
+        return this.checkMax(this.termsPerTopic$,this.maxTopicTerms$)?result$:error$;
         break;
-      }
-      case 'numberOfTopics': {
-        if(this.checkMax(this.numberOfTopics$,this.maxTopics$))
-        return of(settingName);
+      case 'numberOfTopics':
+        return this.checkMax(this.numberOfTopics$,this.maxTopics$)?result$:error$;
         break;
-      }
-      default: return of('');
+      default: 
+        return throwError('No such setting exist');
     }  
   }
 
    public checkMinValueBySettingName(settingName:string): Observable<string>{
+    let error$ = throwError('Minimum value reached!');
+    let result$ = of(settingName); 
     switch(settingName){
-      case 'termsPerCategory':{
-        if(this.checkMin(this.termsPerCategory$)) 
-        return of(settingName);
+      case 'termsPerCategory':
+        return this.checkMin(this.termsPerCategory$)?result$:error$;
         break;
-      }
-      case 'termsPerTopic':{
-        if(this.checkMin(this.termsPerTopic$)) 
-        return of(settingName);
+      case 'termsPerTopic':
+        return this.checkMin(this.termsPerTopic$)?result$:error$;
         break;
-      }
-      case 'numberOfTopics':{
-        if(this.checkMin(this.numberOfTopics$)) 
-        return of(settingName);
+      case 'numberOfTopics':
+        return this.checkMin(this.numberOfTopics$)?result$:error$;
         break;
-      }
-      default: return from('');
+      default: 
+        return throwError('No such setting exist');
     }
-   }
+  }
 }
 

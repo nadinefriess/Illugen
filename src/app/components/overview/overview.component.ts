@@ -1,4 +1,3 @@
-import { OnInit } from '@angular/core';
 import { Component } from '@angular/core';
 import { Store, select } from "@ngrx/store";
 import { Observable } from 'rxjs';
@@ -10,15 +9,10 @@ import { Category, Topic } from 'src/app/state/state';
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss']
 })
-export class OverviewComponent implements OnInit{
+export class OverviewComponent{
   panelOpenState = false;
-  categoryList$: Observable<Category[]>
-  topicList$: Observable<Topic[]>
+  categoryList$: Observable<Category[]> = this.store.pipe(select(selectCategories));
+  topicList$: Observable<Topic[]> = this.store.pipe(select(selectTopics));
 
   constructor(private store: Store) {}
-
-  ngOnInit(){
-    this.categoryList$ = this.store.pipe(select(selectCategories));
-    this.topicList$ = this.store.pipe(select(selectTopics));
-  }
 }

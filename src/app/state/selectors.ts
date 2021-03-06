@@ -1,5 +1,5 @@
 import { createSelector } from "@ngrx/store";
-import { State, AppState, Settings } from "./state";
+import { State, AppState } from "./state";
 
 export const selectApp = createSelector(
     (state: State)=> state.app,
@@ -20,6 +20,11 @@ export const selectSettings = createSelector(
     (state: State) => state.app,
     (app: AppState) => app.settings
 ); 
+
+export const selectRendomTerms = createSelector(
+    (state: State) => state.app,
+    (app: AppState) => app.randomTerms
+);
 
 export const selectTermsPerCategory = createSelector(
     (state: State) => state.app,

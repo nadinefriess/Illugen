@@ -3,7 +3,6 @@ import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { SettingsComponent } from './settings.component';
 import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
-import { getTestScheduler } from 'jasmine-marbles';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
@@ -82,13 +81,18 @@ describe('SettingsComponent', () => {
     expect(counter3.innerText).toBe('1')
   });
   
-  it('should increment counter value on action dispatch', () => {
-    let compSpy = spyOn(component, 'increment').and.callThrough();
-    const counter1 = fixture.nativeElement.querySelector('.counter-max-category-terms');
-    expect(counter1.innerText).toBe('1');
-    component.increment('termsPerCategory');
-    fixture.detectChanges();
-    expect(compSpy).toHaveBeenCalledTimes(1)
-    // TODO: finish test
+  it('should call function on counter button click', () => {
+    let incrementSpy = spyOn(component, 'increment').and.callThrough();
+    let decrementSpy = spyOn(component, 'decrement').and.callThrough();
+    const counterIncrementButtons = fixture.nativeElement.querySelectorAll('.increment');
+    const counterDecrementButtons = fixture.nativeElement.querySelectorAll('.decrement');
+    counterIncrementButtons[0].click();
+    counterIncrementButtons[1].click();
+    counterIncrementButtons[2].click();
+    counterDecrementButtons[0].click();
+    counterDecrementButtons[1].click();
+    counterDecrementButtons[2].click();
+    expect(incrementSpy).toHaveBeenCalledTimes(3);
+    expect(decrementSpy).toHaveBeenCalledTimes(3);
   });
 });

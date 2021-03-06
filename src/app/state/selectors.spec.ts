@@ -13,7 +13,8 @@ describe("Selectors", () => {
         maxCategoryTerms: 1,
         maxTopicTerms: 1,
         maxTopics: 1
-      }
+      },
+      randomTerms:[]
     }
   };
 
@@ -31,11 +32,43 @@ describe("Selectors", () => {
 
   it("should select the settings", () => {
     const result = fromSelectors.selectSettings(initialState);
-    expect(result.termsPerCategory).toEqual(1);
-    expect(result.termsPerTopic).toEqual(1);
-    expect(result.numberOfTopics).toEqual(1);
-    expect(result.maxCategoryTerms).toEqual(1);
-    expect(result.maxTopicTerms).toEqual(1);
-    expect(result.maxTopics).toEqual(1);
+    expect(result).toEqual({
+      termsPerCategory: 1,
+      termsPerTopic: 1,
+      numberOfTopics: 1,
+      maxCategoryTerms: 1,
+      maxTopicTerms: 1,
+      maxTopics: 1
+    });
+  });
+  
+  it("should select termsPerCategory", () => {
+    const result = fromSelectors.selectTermsPerCategory(initialState);
+    expect(result).toEqual(1);
+  });
+
+  it("should select termsPerTopic", () => {
+    const result = fromSelectors.selectTermsPerTopic(initialState);
+    expect(result).toEqual(1);
+  });
+  
+  it("should select numberOfTopics", () => {
+    const result = fromSelectors.selectNumberOfTopics(initialState);
+    expect(result).toEqual(1);
+  });
+  
+  it("should select maxCategoryTerms", () => {
+    const result = fromSelectors.selectMaxCategoryTerms(initialState);    
+    expect(result).toEqual(1);
+  });
+  
+  it("should select maxTopicTerms", () => {
+    const result = fromSelectors.selectMaxTopicTerms(initialState);
+    expect(result).toEqual(1);
+  });
+  
+  it("should select maxTopics", () => {
+    const result = fromSelectors.selectMaxTopics(initialState);
+    expect(result).toEqual(1);
   });
 });

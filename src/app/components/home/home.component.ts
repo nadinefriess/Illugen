@@ -1,6 +1,8 @@
 import { Component} from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { AppService } from '../../services/service'
+import { createRandomTerms } from 'src/app/state/actions';
+import { selectRendomTerms } from 'src/app/state/selectors';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +11,11 @@ import { AppService } from '../../services/service'
 })
 export class HomeComponent{
   title = 'Illugen';
-  result$: Observable<string[]>;
+  rendomTerms$: Observable<string[]> = this.store.pipe(select(selectRendomTerms));
 
-  constructor(public appService: AppService) {}
+  constructor(public store: Store) {}
 
   public onGenerateClick():void{
-    this.result$ = this.appService.getRandomTerms();
+     this.store.dispatch(createRandomTerms());
   }
 }

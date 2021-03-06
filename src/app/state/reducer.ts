@@ -1,13 +1,16 @@
 import { createReducer, on } from '@ngrx/store';
 import { AppState} from '../state/state';
 import { appState } from '../../assets/initial-state';
-import { decrementSettingsSuccess, incrementSettingsSuccess } from './actions';
+import * as fromActions from './actions';
 
 export const initialState: AppState = appState;
 
 export const appReducer = createReducer(
   initialState,
-  on(incrementSettingsSuccess, (state, { settingName }) => {
+  on(fromActions.createRandomTermsSuccess, (state, { randomTerms })=> {    
+    return {...state,randomTerms};
+  }),
+  on(fromActions.incrementSettingsSuccess, (state, { settingName }) => {
     switch(settingName){
       case 'termsPerCategory': {
         var termsPerCategory = state.settings.termsPerCategory + 1;
@@ -30,7 +33,7 @@ export const appReducer = createReducer(
       default: state;
     }
   }),
-  on(decrementSettingsSuccess, (state, { settingName }) => {
+  on(fromActions.decrementSettingsSuccess, (state, { settingName }) => {
     switch(settingName){
       case 'termsPerCategory': {
         var termsPerCategory = state.settings.termsPerCategory - 1;
