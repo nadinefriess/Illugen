@@ -11,7 +11,7 @@
         <div class="hint">
             <p>Wähle die maximal zu berücksichtigten Begriffe und die Anzahl der Themen aus.</p>
         </div> 
-        <div class="setting-max-category-terms">
+        <div class="setting-max-category-terms setting">
             <p class="setting-label">Begriffe pro Kategorie (max.: {{maxCategoryTerms$|async}})</p>
             <div>
                 <button (click)="decrement('termsPerCategory')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
@@ -23,7 +23,7 @@
                 </button>
             </div>
         </div>
-        <div class="setting-max-topic-terms">
+        <div class="setting-max-topic-terms setting">
             <p class="setting-label">Begriffe pro Thema (max.: {{maxTopicTerms$|async}})</p>
             <div>
                 <button (click)="decrement('termsPerTopic')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
@@ -35,7 +35,7 @@
                 </button>
             </div>
         </div>
-        <div class="setting-max-topics">
+        <div class="setting-max-topics setting">
             <p class="setting-label">Anzahl der Themen (max: {{maxTopics$|async}})</p>
             <div>
                 <button (click)="decrement('numberOfTopics')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">

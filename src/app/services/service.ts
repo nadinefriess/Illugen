@@ -22,16 +22,18 @@ export class AppService {
 
   constructor(private store: Store) {}
 
-  private returnRendomIndexFromTermList(listLength:number):number{
+  private returnRendomIndexFromList(listLength:number):number{
     const RANDOM = Math.floor(Math.random() * listLength);
     return RANDOM;
   }
 
-  private collectRandomTerms(list:Category[]|Topic[]):string[]{
+  private collectRandomTerms(list:Category[]|Topic[],maxValue:number):string[]{
     var randomTerms = [];
     list.forEach((item, ind) => {
-      var randomIndex = this.returnRendomIndexFromTermList(list[ind].terms.length);
+      for(let i=0; i<maxValue; i++){
+      var randomIndex = this.returnRendomIndexFromList(list[ind].terms.length);
       randomTerms.push(item.terms[randomIndex]);
+      }
     });
     return randomTerms;
   }
@@ -76,15 +78,25 @@ export class AppService {
   public getRandomTerms():Observable<string[]>{    
     this.randomTermList$ = combineLatest([
       this.categoryList$,
+      this.termsPerCategory$,
       this.topicList$,
+      this.termsPerTopic$,
+      this.numberOfTopics$,
     ]).pipe(
       map(
-        (combinedList:[Category[],Topic[]])=>{
-          var result = [];
-          combinedList.forEach(list => 
-            result = [...result,... this.collectRandomTerms(list)]
-            );
-            return result;
+        ([categoryList,termsPerCategory,topicList,numberOfTopics,termsPerTopic])=>{
+          // select random Topics by setted count
+          let selectedTopicListByAmount = []
+          for(let i=0; i<numberOfTopics; i++){
+            let randomTopicIdex = this.returnRendomIndexFromList(topicList.length);
+            selectedTopicListByAmount = [...selectedTopicListByAmount, topicList[randomTopicIdex]]
+            }
+
+          // return random terms from lists by setted term count
+          let result = [];
+          result = [...result, ...this.collectRandomTerms(categoryList,termsPerCategory)];
+          result = [...result, ...this.collectRandomTerms(selectedTopicListByAmount,termsPerTopic)];
+          return result;
       }
     ))
     return this.randomTermList$;

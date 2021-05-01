@@ -13,13 +13,16 @@ export const appState: AppState = {
             terms:["Rot","Gelb","Blau","Grün","Orange","Lila","Weiß","Schwarz"]
         },{
             category:"Maltechnik",
-            terms:["Lasur","Mit geschlossenen Augen","mit links","beidhändig","Nass-in-Nass","Collagieren","Spachteln","Aquarell","Acryl","Kreide","Wachskreide","Aqarellstifte","Tinte"]
+            terms:["Lasur","Mit geschlossenen Augen","linkshändig","beidhändig","Nass-in-Nass","Collagieren","Spachteln"]
+        },{
+            category:"Material",
+            terms:["Aquarell","Acryl","Kreide","Wachskreide","Aqarellstifte","Tinte"]
         },{
             category:"Emotionen",
-            terms:["Freude","Wut","Angst","Ekel","Trauer","Überraschung","Liebe","Müde"]
+            terms:["Freude","Wut","Angst","Ekel","Trauer","Überraschung","Liebe","Müdigkeit"]
         },{
             category:"Muster",
-            terms:["Streifen","Punkte","Flecken","Zacken","Karo","Rauten","Schuppen","Kringel","Wellen","Leo","Zebra","Tetris","Sterne","Herzen"]
+            terms:["Streifen","Punkte","Flecken","Zacken","Rauten","Schuppen","Kringel","Wellen"]
         }
     ],
     topics: [
@@ -30,7 +33,7 @@ export const appState: AppState = {
             topic:"Meerestiere",
             terms:["Auster","Garnele","Hai","Clownfisch","Delfin","Krabbe","Rochen","Seepferdchen","Tintenfisch","Pinguin","Oktopus","Walross"],
         },{
-            topic:"Wesen",
+            topic:"Fantasiewesen",
             terms:["Drachen","Feen","Zwerge","Hexe","Zauberer","Elfe","Einhorn","Engel"],
         },{
             topic:"Pflanzen",

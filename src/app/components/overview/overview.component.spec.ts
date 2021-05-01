@@ -71,31 +71,32 @@ describe('OverviewComponent', () => {
       const parentAccordions = fixture.nativeElement.querySelector('.data-lists');
       parentAccordions.click(); // opens all parent accordions
       const categoryTitle = fixture.nativeElement.querySelectorAll('.category-title');
-      expect(categoryTitle.length).toEqual(6);
+      expect(categoryTitle.length).toEqual(7);
       expect(categoryTitle[0].innerText).toBe('Körper')
       expect(categoryTitle[1].innerText).toBe('Formen')
       expect(categoryTitle[2].innerText).toBe('Farben')
       expect(categoryTitle[3].innerText).toBe('Maltechnik')
-      expect(categoryTitle[4].innerText).toBe('Emotionen')
-      expect(categoryTitle[5].innerText).toBe('Muster')
+      expect(categoryTitle[4].innerText).toBe('Material')
+      expect(categoryTitle[5].innerText).toBe('Emotionen')
+      expect(categoryTitle[6].innerText).toBe('Muster')
       
       const topicTitle = fixture.nativeElement.querySelectorAll('.topic-title');
       expect(topicTitle.length).toEqual(6);
       expect(topicTitle[0].innerText).toBe('Haustiere')
       expect(topicTitle[1].innerText).toBe('Meerestiere')
-      expect(topicTitle[2].innerText).toBe('Wesen')
+      expect(topicTitle[2].innerText).toBe('Fantasiewesen')
       expect(topicTitle[3].innerText).toBe('Pflanzen')
       expect(topicTitle[4].innerText).toBe('Kleidung')
       expect(topicTitle[5].innerText).toBe('Transportmittel')
     });
 
-    it(`should render all (59) corresponding terms in the sub accordions `, () => {
+    it(`should render all (53) corresponding terms in the sub accordions `, () => {
       const parentAccordions = fixture.nativeElement.querySelector('.data-lists');
       parentAccordions.click(); // opens all parent accordions
       const subAccordions = fixture.nativeElement.querySelector('.category-list');
       subAccordions.click(); // opens first sub accordion
       const terms = fixture.nativeElement.querySelectorAll('.category-term');      
-      expect(terms.length).toEqual(59);
+      expect(terms.length).toEqual(53);
       expect(terms[0].innerText).toEqual('Kegel');
     });
   });
