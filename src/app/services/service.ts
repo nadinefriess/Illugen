@@ -28,18 +28,26 @@ export class AppService {
   }
 
   private collectRandomTerms(list:Category[]|Topic[],maxValue:number):string[]{
-    var randomTerms = [];
-    list.forEach((item, ind) => {
-      for(let i=0; i<maxValue; i++){
-      var randomIndex = this.returnRendomIndexFromList(list[ind].terms.length);
-      randomTerms.push(item.terms[randomIndex]);
-      }
+    let randomTerms = [];
+    list.forEach(item => {
+      randomTerms = [...randomTerms, ...this.collectRandomListItems(Array.from(item.terms),maxValue)];
     });
     return randomTerms;
   }
 
+  // needs a deep copy list as parameter because of manipulation of the list within this function
+  private collectRandomListItems(list:any, count:number):any{
+    let randomListItems = [];
+    for(let i=0; i<count; i++){
+      let randomIndex = this.returnRendomIndexFromList(list.length);
+      randomListItems = [...randomListItems, list[randomIndex]]
+      list.splice(randomIndex,1)
+    }
+    return randomListItems;
+  }
+
   private checkSmallestLength(listName:string):Observable<number>{ 
-    var lists = [];
+    let lists = [];
     return this[listName+'List$'].pipe(
       map((list:Category[]|Topic[]) => {
         list.forEach((item)=>{
@@ -51,7 +59,7 @@ export class AppService {
   }
 
   private checkMax(obs1:Observable<number>,obs2:Observable<number>):boolean{
-    var checkMax = false;
+    let checkMax = false;
      combineLatest([
        obs1,
        obs2
@@ -65,7 +73,7 @@ export class AppService {
    }
 
    private checkMin(obs1:Observable<number>):boolean{
-    var checkMin = false;
+    let checkMin = false;
     obs1.pipe(
       map(number=>{
        if(number > 1)
@@ -84,18 +92,17 @@ export class AppService {
       this.numberOfTopics$,
     ]).pipe(
       map(
-        ([categoryList,termsPerCategory,topicList,numberOfTopics,termsPerTopic])=>{
+        ([categoryList,termsPerCategory,topicList,termsPerTopic,numberOfTopics])=>{
           // select random Topics by setted count
-          let selectedTopicListByAmount = []
-          for(let i=0; i<numberOfTopics; i++){
-            let randomTopicIdex = this.returnRendomIndexFromList(topicList.length);
-            selectedTopicListByAmount = [...selectedTopicListByAmount, topicList[randomTopicIdex]]
-            }
+          let topicListBySelectedCount = this.collectRandomListItems(Array.from(topicList),numberOfTopics)
+
+          // TODO: to be implemented
+          // let categoryListBySelectedCount = this.collectRandomListItems(Array.from(categoryList),numberOfCategories)
 
           // return random terms from lists by setted term count
           let result = [];
           result = [...result, ...this.collectRandomTerms(categoryList,termsPerCategory)];
-          result = [...result, ...this.collectRandomTerms(selectedTopicListByAmount,termsPerTopic)];
+          result = [...result, ...this.collectRandomTerms(topicListBySelectedCount,termsPerTopic)];
           return result;
       }
     ))
