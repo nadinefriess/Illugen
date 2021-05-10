@@ -35,6 +35,18 @@
                 </button>
             </div>
         </div>
+        <div class="setting-max-categories setting">
+            <p class="setting-label">Anzahl der Kategorien (max: {{maxCategories$|async}})</p>
+            <div>
+                <button (click)="decrement('numberOfCategories')" mat-icon-button class="action-icon decrement" aria-label="Icon-button with arrow left icon">
+                    <mat-icon>keyboard_arrow_left</mat-icon>
+                </button>
+                <span class='counter-max-categories'>{{numberOfCategories$|async}}</span>
+                <button (click)="increment('numberOfCategories')" mat-icon-button class="action-icon increment" aria-label="Icon-button with arrow right icon">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </button>
+            </div>
+        </div>
         <div class="setting-max-topics setting">
             <p class="setting-label">Anzahl der Themen (max: {{maxTopics$|async}})</p>
             <div>

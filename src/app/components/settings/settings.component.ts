@@ -12,9 +12,11 @@ export class SettingsComponent{
   public maxCategoryTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxCategoryTerms));
   public maxTopicTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxTopicTerms));
   public maxTopics$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxTopics));
+  public maxCategories$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxCategories));
   public termsPerCategory$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerCategory));
   public termsPerTopic$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerTopic));
   public numberOfTopics$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfTopics));
+  public numberOfCategories$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfCategories));
 
   constructor(private store: Store) {}
 

@@ -41,6 +41,11 @@ export const selectNumberOfTopics = createSelector(
     (app: AppState) => app.settings.numberOfTopics
 ); 
 
+export const selectNumberOfCategories = createSelector(
+    (state: State) => state.app,
+    (app: AppState) => app.settings.numberOfCategories
+); 
+
 export const selectMaxCategoryTerms = createSelector(
     (state: State) => state.app,
     (app: AppState) => app.settings.maxCategoryTerms
@@ -54,4 +59,9 @@ export const selectMaxTopicTerms = createSelector(
 export const selectMaxTopics = createSelector(
     (state: State) => state.app,
     (app: AppState) => app.settings.maxTopics
+); 
+
+export const selectMaxCategories = createSelector(
+    (state: State) => state.app,
+    (app: AppState) => app.settings.maxCategories
 ); 

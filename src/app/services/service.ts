@@ -16,9 +16,11 @@ export class AppService {
   public maxCategoryTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxCategoryTerms));
   public maxTopicTerms$:Observable<number> = this.store.pipe(select(fromSelectors.selectMaxTopicTerms));
   public maxTopics$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxTopics));
+  public maxCategories$:Observable<number>  = this.store.pipe(select(fromSelectors.selectMaxCategories));
   public termsPerCategory$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerCategory));
   public termsPerTopic$:Observable<number> =this.store.pipe(select(fromSelectors.selectTermsPerTopic));
   public numberOfTopics$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfTopics));
+  public numberOfCategories$:Observable<number> =this.store.pipe(select(fromSelectors.selectNumberOfCategories));
 
   constructor(private store: Store) {}
 
@@ -90,18 +92,17 @@ export class AppService {
       this.topicList$,
       this.termsPerTopic$,
       this.numberOfTopics$,
+      this.numberOfCategories$
     ]).pipe(
       map(
-        ([categoryList,termsPerCategory,topicList,termsPerTopic,numberOfTopics])=>{
-          // select random Topics by setted count
+        ([categoryList,termsPerCategory,topicList,termsPerTopic,numberOfTopics,numberOfCategories])=>{
+          // select random topics and categories by setted count
           let topicListBySelectedCount = this.collectRandomListItems(Array.from(topicList),numberOfTopics)
-
-          // TODO: to be implemented
-          // let categoryListBySelectedCount = this.collectRandomListItems(Array.from(categoryList),numberOfCategories)
+          let categoryListBySelectedCount = this.collectRandomListItems(Array.from(categoryList),numberOfCategories)
 
           // return random terms from lists by setted term count
           let result = [];
-          result = [...result, ...this.collectRandomTerms(categoryList,termsPerCategory)];
+          result = [...result, ...this.collectRandomTerms(categoryListBySelectedCount,termsPerCategory)];
           result = [...result, ...this.collectRandomTerms(topicListBySelectedCount,termsPerTopic)];
           return result;
       }
@@ -135,6 +136,9 @@ export class AppService {
       case 'numberOfTopics':
         return this.checkMax(this.numberOfTopics$,this.maxTopics$)?result$:error$;
         break;
+      case 'numberOfCategories':
+        return this.checkMax(this.numberOfCategories$,this.maxCategories$)?result$:error$;
+        break;
       default: 
         return throwError('No such setting exist');
     }  
@@ -152,6 +156,9 @@ export class AppService {
         break;
       case 'numberOfTopics':
         return this.checkMin(this.numberOfTopics$)?result$:error$;
+        break;
+      case 'numberOfCategories':
+        return this.checkMin(this.numberOfCategories$)?result$:error$;
         break;
       default: 
         return throwError('No such setting exist');
