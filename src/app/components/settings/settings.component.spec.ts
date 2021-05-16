@@ -66,10 +66,11 @@ describe('SettingsComponent', () => {
 
   it(`should render setting label with corresponding max value`, () => {
     const settingLabels = fixture.nativeElement.querySelectorAll('.setting-label');
-    expect(settingLabels.length).toBe(3);
+    expect(settingLabels.length).toBe(4);
     expect(settingLabels[0].innerText).toEqual('Begriffe pro Kategorie (max.: 7)');
     expect(settingLabels[1].innerText).toEqual('Begriffe pro Thema (max.: 8)');
-    expect(settingLabels[2].innerText).toEqual('Anzahl der Themen (max: 6)');
+    expect(settingLabels[2].innerText).toEqual('Anzahl der Kategorien (max.: 6)');
+    expect(settingLabels[3].innerText).toEqual('Anzahl der Themen (max.: 6)');
   });
 
   it(`should render counter with corresponding setting value`, () => {

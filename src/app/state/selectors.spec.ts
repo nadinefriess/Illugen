@@ -10,9 +10,11 @@ describe("Selectors", () => {
         termsPerCategory: 1,
         termsPerTopic: 1,
         numberOfTopics: 1,
+        numberOfCategories: 1,
         maxCategoryTerms: 1,
         maxTopicTerms: 1,
-        maxTopics: 1
+        maxTopics: 1,
+        maxCategories: 1
       },
       randomTerms:[]
     }
@@ -36,9 +38,11 @@ describe("Selectors", () => {
       termsPerCategory: 1,
       termsPerTopic: 1,
       numberOfTopics: 1,
+      numberOfCategories: 1,
       maxCategoryTerms: 1,
       maxTopicTerms: 1,
-      maxTopics: 1
+      maxTopics: 1,
+      maxCategories: 1
     });
   });
   
@@ -56,6 +60,11 @@ describe("Selectors", () => {
     const result = fromSelectors.selectNumberOfTopics(initialState);
     expect(result).toEqual(1);
   });
+
+  it("should select numberOfCategories", () => {
+    const result = fromSelectors.selectNumberOfCategories(initialState);
+    expect(result).toEqual(1);
+  });
   
   it("should select maxCategoryTerms", () => {
     const result = fromSelectors.selectMaxCategoryTerms(initialState);    
@@ -69,6 +78,11 @@ describe("Selectors", () => {
   
   it("should select maxTopics", () => {
     const result = fromSelectors.selectMaxTopics(initialState);
+    expect(result).toEqual(1);
+  });
+
+  it("should select maxCategories", () => {
+    const result = fromSelectors.selectMaxCategories(initialState);
     expect(result).toEqual(1);
   });
 });
