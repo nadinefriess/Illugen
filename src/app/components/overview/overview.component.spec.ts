@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { OverviewComponent } from './overview.component';
-import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
+import { AppState } from 'src/app/state/state';
 
 describe('OverviewComponent', () => {
   let component: OverviewComponent;
@@ -10,29 +10,13 @@ describe('OverviewComponent', () => {
 
   beforeEach(async(() => {
     const initialState = {app: appState};
-    let store: MockStore;
-    let spy = jasmine.createSpyObj(
-      'AppService',
-        [
-          'returnRendomIndexFromTermList',
-          'collectRandomTerms',
-          'checkSmallestLength',
-          'getRandomTerms',
-          'getSmallestLengthOfLists',
-          'getSettingValueByName',
-          'getNumberOfTopics'
-        ],[
-          'categoryList$',
-          'topicList$',
-          'settings$'
-        ]
-      );
-
+    let store: MockStore<AppState>;
+  
     TestBed.configureTestingModule({
       declarations: [ OverviewComponent ],
       providers: [
-        provideMockStore({ initialState }),
-        {provide: AppService, useValue: spy}]
+        provideMockStore({ initialState })
+      ]
     })
     .compileComponents();
   

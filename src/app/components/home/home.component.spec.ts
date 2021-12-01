@@ -1,45 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
-import { AppService } from 'src/app/services/service';
-import { getTestScheduler } from 'jasmine-marbles';
 import { appState } from 'src/assets/initial-state';
-import { provideMockStore } from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
+import { createRandomTerms } from 'src/app/state/actions';
+import { AppState } from 'src/app/state/state';
+import { selectRendomTerms } from 'src/app/state/selectors';
+import { By } from '@angular/platform-browser';
+import { map } from 'rxjs/operators';
 
 describe('HomeComponent', () => {
   const initialState = {app: appState};
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let appServiceSpy: jasmine.SpyObj<AppService>;
-  let spy = jasmine.createSpyObj(
-    'AppService',
-      [
-        'returnRendomIndexFromTermList',
-        'collectRandomTerms',
-        'checkSmallestLength',
-        'getRandomTerms',
-        'getSmallestLengthOfLists',
-        'getSettingValueByName',
-        'getNumberOfTopics'
-      ],[
-        'categoryList$',
-        'topicList$',
-        'settings$'
-      ]
-    );
+  let store: MockStore<AppState>;
 
   beforeEach(async(() => {  
     TestBed.configureTestingModule({
       declarations: [HomeComponent],
       providers: [
-        provideMockStore({ initialState }),
-        { provide: AppService, useValue: spy}],
+        provideMockStore({ initialState })
+      ],
     }).compileComponents();
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    appServiceSpy = TestBed.inject(AppService) as jasmine.SpyObj<AppService>;
     fixture.detectChanges(); 
+    spyOn(store, 'dispatch').and.callFake(()=>{});
   }));
 
   it('should create', () => {
@@ -76,13 +64,31 @@ describe('HomeComponent', () => {
     expect(component.onGenerateClick).toHaveBeenCalled();
   });
   
-  it('should render list with terms',  () =>  {
-    component.rendomTerms$ = of(['Kreis','Blau','Hund']); 
-    fixture.detectChanges(); 
-    const list = fixture.nativeElement.querySelectorAll('.term');
-    expect(list.length).toBe(3);
-    expect(list[0].innerText).toBe('Kreis');
-    expect(list[1].innerText).toBe('Blau');
-    expect(list[2].innerText).toBe('Hund');
+  describe('selectors',()=>{
+    let mockRendomTermsSelector;
+    
+    beforeEach(()=>{
+      mockRendomTermsSelector = store.overrideSelector(selectRendomTerms, 
+        ['Term1','Term2']);
+      fixture.detectChanges();
+      store.refreshState()
+    });
+
+    it('should render list with random terms',  () =>  {
+      // Two terms are expected, because this is predefined in the Illugen settings.
+      component.rendomTerms$ = of(['Blau','Hund']); 
+      fixture.detectChanges(); 
+      const list = fixture.nativeElement.querySelectorAll('.term');
+      expect(list.length).toBe(2);
+      expect(list[0].innerText).toBe('Blau');
+      expect(list[1].innerText).toBe('Hund');
+    });
+  });
+
+  it('should dispatch createRandomTerms', ()=>{
+    component.onGenerateClick();
+    expect(store.dispatch).toHaveBeenCalledWith(
+      createRandomTerms()
+    );
   });
 })

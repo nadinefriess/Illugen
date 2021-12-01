@@ -1,49 +1,31 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 import { SettingsComponent } from './settings.component';
-import { AppService } from 'src/app/services/service';
 import { appState } from '../../../assets/initial-state';
+import { decrementSettings, incrementSettings } from 'src/app/state/actions';
+import { AppState } from 'src/app/state/state';
 
 describe('SettingsComponent', () => {
   let component: SettingsComponent;
   let fixture: ComponentFixture<SettingsComponent>;
-  let appServiceSpy: jasmine.SpyObj<AppService>;
-  let mockStore: MockStore;
-  let mockStoreSpy: jasmine.SpyObj<MockStore>;
-  
+  let store: MockStore<AppState>
+
   beforeEach(async(() => {
     const initialState = {app: appState};
 
-    let spy = jasmine.createSpyObj(
-      'AppService',
-        [
-          'returnRendomIndexFromTermList',
-          'collectRandomTerms',
-          'checkSmallestLength',
-          'getRandomTerms',
-          'getSmallestLengthOfLists',
-          'getSettingValueByName',
-          'getNumberOfTopics'
-        ],[
-          'categoryList$',
-          'topicList$',
-          'settings$'
-        ]
-      );
     TestBed.configureTestingModule({
       declarations: [ SettingsComponent ],
       providers: [
-        provideMockStore({ initialState }),
-        {provide: AppService, useValue: spy}
+        provideMockStore({ initialState })
       ]})
     .compileComponents();
 
+    store = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(SettingsComponent);
     component = fixture.componentInstance;
-    mockStore = TestBed.inject(MockStore);
-    appServiceSpy = TestBed.inject(AppService) as jasmine.SpyObj<AppService>;
-    mockStoreSpy = TestBed.inject(MockStore) as jasmine.SpyObj<MockStore>;
     fixture.detectChanges();
+    
+    spyOn(store, 'dispatch').and.callFake(()=>{});
   }));
 
   it('should create', () => {
@@ -77,12 +59,14 @@ describe('SettingsComponent', () => {
     const counter1 = fixture.nativeElement.querySelector('.counter-max-category-terms');
     const counter2 = fixture.nativeElement.querySelector('.counter-max-topic-terms');
     const counter3 = fixture.nativeElement.querySelector('.counter-max-topics');
+    const counter4 = fixture.nativeElement.querySelector('.counter-max-categories');
     expect(counter1.innerText).toBe('1')
     expect(counter2.innerText).toBe('1')
     expect(counter3.innerText).toBe('1')
+    expect(counter4.innerText).toBe('1')
   });
   
-  it('should call function on counter button click', () => {
+  it('should call corresponding function on counter button click', () => {
     let incrementSpy = spyOn(component, 'increment').and.callThrough();
     let decrementSpy = spyOn(component, 'decrement').and.callThrough();
     const counterIncrementButtons = fixture.nativeElement.querySelectorAll('.increment');
@@ -92,8 +76,23 @@ describe('SettingsComponent', () => {
     counterIncrementButtons[2].click();
     counterDecrementButtons[0].click();
     counterDecrementButtons[1].click();
-    counterDecrementButtons[2].click();
     expect(incrementSpy).toHaveBeenCalledTimes(3);
-    expect(decrementSpy).toHaveBeenCalledTimes(3);
+    expect(decrementSpy).toHaveBeenCalledTimes(2);
+  });
+
+  it('settings should dispatch incrementSettings', ()=>{
+    const setting = 'termsPerCategory';
+    component.increment(setting);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      incrementSettings({settingName:setting})
+    );
+  });
+
+  it('settings should dispatch decrementSettings', ()=>{
+    const setting = 'termsPerCategory';
+    component.decrement(setting);
+    expect(store.dispatch).toHaveBeenCalledWith(
+      decrementSettings({settingName:setting})
+    );
   });
 });
